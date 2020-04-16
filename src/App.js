@@ -1,26 +1,17 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { Map } from "./components/Map";
+
+const locations = [
+    { latitude: 13.3294, longitude: 74.7579 },
+    { latitude: 13.391, longitude: 74.712 },
+];
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return (
+        <div style={{ width: "100vw", height: "100vh" }}>
+            <Map latitude={13.3363} longitude={74.7464} locations={locations} />
+        </div>
+    );
 }
 
 export default App;
