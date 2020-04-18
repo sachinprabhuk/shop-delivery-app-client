@@ -6,12 +6,12 @@ export const BottomNav = () => {
     return (
         <Navbar bg="primary" variant="dark" fixed="bottom">
             <Nav className="justify-content-between w-100" fill>
-                <Nav.Link as={NavLink} to="/home">
+                <Nav.Link as={NavLink} to="/">
                     Home
                 </Nav.Link>
                 <Nav.Link as={NavLink} to="/search">
                     Search
-                </Nav.Link>{" "}
+                </Nav.Link>
                 <Nav.Link as={NavLink} to="/profile">
                     Profile
                 </Nav.Link>
