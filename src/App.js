@@ -1,16 +1,23 @@
 import React from "react";
-import { Map } from "./components/Map";
+import { BottomNav } from "./components/navigations/BottomNav";
+import { Route } from "react-router";
+import { Home } from "./components/Home";
+import { Search } from "./components/search/Search";
+import { Profile } from "./components/Profile";
 
-const locations = [
-    { latitude: 13.3294, longitude: 74.7579 },
-    { latitude: 13.391, longitude: 74.712 },
-];
+// const shops = [
+//     { id: 1, name: "shop 1", location: { latitude: 13.3294, longitude: 74.7579 } },
+//     { id: 2, name: "shop 2", location: { latitude: 13.391, longitude: 74.712 } },
+// ];
 
 function App() {
     return (
-        <div style={{ width: "100vw", height: "100vh" }}>
-            <Map latitude={13.3363} longitude={74.7464} locations={locations} />
-        </div>
+        <>
+            <Route exact path="/" component={Home} />
+            <Route path="/search" component={Search} />
+            <Route exact path="/profile" component={Profile} />
+            <BottomNav />
+        </>
     );
 }
 
