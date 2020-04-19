@@ -11,26 +11,29 @@ export const BottomNav = () => {
                     exact
                     as={NavLink}
                     to="/"
-                    className="flex-grow-1 text-center"
+                    className="flex-grow-1 text-center d-flex flex-column align-items-center py-1 border-top"
                     activeClassName="border-top border-primary"
                 >
-                    <HomeOutlined></HomeOutlined>
+                    <HomeOutlined fontSize="small"></HomeOutlined>
+                    <span className="font-small">Home</span>
                 </Nav.Link>
                 <Nav.Link
                     as={NavLink}
                     to="/search"
-                    className="flex-grow-1 text-center"
+                    className="flex-grow-1 text-center d-flex flex-column align-items-center py-1 border-top"
                     activeClassName="border-top border-primary"
                 >
-                    <SearchOutlined />
+                    <SearchOutlined fontSize="small" />
+                    <span className="font-small">Search</span>
                 </Nav.Link>
                 <Nav.Link
                     as={NavLink}
                     to="/profile"
-                    className="flex-grow-1 text-center"
+                    className="flex-grow-1 text-center d-flex flex-column align-items-center py-1 border-top"
                     activeClassName="border-top border-primary"
                 >
                     <PersonOutlined />
+                    <span className="font-small">Profile</span>
                 </Nav.Link>
             </Nav>
         </Navbar>

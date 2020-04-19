@@ -24,3 +24,7 @@ code {
 .marker-btn:focus {
   border: none;
 }
+
+.font-small {
+  font-size: 12px;
+}
