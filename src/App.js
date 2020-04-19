@@ -1,25 +1,23 @@
 import React from "react";
 import { BottomNav } from "./components/navigations/BottomNav";
-import { Route } from "react-router";
+import { Route, Switch } from "react-router";
 import { Home } from "./components/Home";
 import { Search } from "./components/search/Search";
 import { Profile } from "./components/Profile";
-import { Container } from "react-bootstrap";
-
-// const shops = [
-//     { id: 1, name: "shop 1", location: { latitude: 13.3294, longitude: 74.7579 } },
-//     { id: 2, name: "shop 2", location: { latitude: 13.391, longitude: 74.712 } },
-// ];
+import { TopBar } from "./components/navigations/TopBar";
+import { Map as GeoMap } from "./components/Map";
+import { Cart } from "./components/Cart";
 
 function App() {
     return (
         <>
-            <Container>
+            <Switch>
+                <Route exact path="/map" component={(props) => <GeoMap {...props} title="Map" />} />
+                <Route exact path="/cart" component={(props) => <Cart {...props} title="Your cart" />} />
                 <Route exact path="/" component={Home} />
-                <Route path="/search" component={Search} />
                 <Route exact path="/profile" component={Profile} />
-            </Container>
-            <BottomNav />
+                <Route path="/search" component={Search} />
+            </Switch>
         </>
     );
 }

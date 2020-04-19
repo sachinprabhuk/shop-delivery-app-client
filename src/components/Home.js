@@ -1,5 +1,11 @@
-import React from 'react';
+import React from "react";
+import { Container } from "react-bootstrap";
+import { withStdTopNav, withStdBottomNav } from "./HOC/NavHOC";
 
-export const Home = () => {
-    return <p>Recommendations will be here</p>    
-}
+export const Home = withStdBottomNav(withStdTopNav(() => {
+    return (
+        <Container>
+            <p>Recommendations will be here</p>
+        </Container>
+    );
+}));
