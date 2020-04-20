@@ -1,0 +1,13 @@
+.full-container {
+	height: 100%;
+	width: 100%;
+}
+.v-padd {
+	padding: 20px 0;
+}
+.h-padd {
+	padding: 0 20px;
+}
+.padd{
+	padding: 0 20px;
+}

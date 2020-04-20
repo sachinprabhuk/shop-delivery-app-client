@@ -1,0 +1,27 @@
+.collapsible{
+    width:100%;
+}
+.collapsible .header{
+    line-height:30px;
+    font-size:20px;
+    display:flex;
+    flex-wrap: nowrap;
+    cursor:pointer;
+}
+.collapsible .title{
+    text-align:left;
+    padding-right:20px;
+}
+.collapsible .line{
+    flex-grow:1;
+    margin:15px 0px;
+    height:1px;
+    background:black;
+}
+.collapsible .toggle{
+    padding-left:20px;
+    text-align:right;
+}
+.collapsible .body{
+    padding:20px;
+}

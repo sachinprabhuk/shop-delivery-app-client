@@ -7,7 +7,7 @@ import { Profile } from "./components/Profile";
 import { TopBar } from "./components/navigations/TopBar";
 import { Map as GeoMap } from "./components/Map";
 import { Cart } from "./components/Cart";
-
+import Dashboard from './components/owner/dashboard'
 function App() {
     return (
         <>
@@ -17,6 +17,7 @@ function App() {
                 <Route exact path="/" component={Home} />
                 <Route exact path="/profile" component={Profile} />
                 <Route path="/search" component={Search} />
+				<Route path = "/owner" component={Dashboard} />
             </Switch>
         </>
     );
