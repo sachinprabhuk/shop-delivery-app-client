@@ -1,7 +1,7 @@
 import React from "react";
 import { Nav, Navbar, Image } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
-import { HomeOutlined, PersonOutlined, SearchOutlined } from "@material-ui/icons";
+import { HomeOutlined, PersonOutlined, SearchOutlined, ShoppingCartOutlined, ShoppingBasketOutlined } from "@material-ui/icons";
 
 export const BottomNav = () => {
     return (
@@ -24,7 +24,7 @@ export const BottomNav = () => {
                     activeClassName="border-top border-primary"
                 >
                     <SearchOutlined fontSize="small" />
-                    <span className="font-small">Search</span>
+                    <span className="font-small">Find</span>
                 </Nav.Link>
                 <Nav.Link
                     as={NavLink}

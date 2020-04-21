@@ -1,6 +1,6 @@
 import React from "react";
 import { Container } from "react-bootstrap";
-import { withGoBackTopNav } from "./HOC/NavHOC";
+import { withGoBackTopNav, withStdBottomNav, withStdTopNav } from "./HOC/NavHOC";
 
 export const Cart = withGoBackTopNav(() => {
     return (
