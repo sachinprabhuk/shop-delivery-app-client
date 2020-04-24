@@ -19,7 +19,7 @@ export const BottomNav = () => {
                 </Nav.Link>
                 <Nav.Link
                     as={NavLink}
-                    to="/search"
+                    to="/searchpage"
                     className="flex-grow-1 text-center d-flex flex-column align-items-center py-1 border-top"
                     activeClassName="border-top border-primary"
                 >

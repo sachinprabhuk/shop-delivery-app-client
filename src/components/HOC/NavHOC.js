@@ -2,6 +2,7 @@ import React from 'react';
 import { TopBar } from "../navigations/TopBar";
 import { BottomNav } from "../navigations/BottomNav";
 import { TopNavGoBack } from "../navigations/TopNavGoBack";
+import { SearchStateTopNav } from '../navigations/SearchStateTopNav';
 
 export const withStdTopNav = (WrappedComponent) => {
     return (props) => (
@@ -26,6 +27,16 @@ export const withGoBackTopNav = (WrappedComponent) => {
         <>
             <TopNavGoBack title={title} />
             <WrappedComponent {...rest} />
+        </>
+    );
+};
+
+export const withSearchStateTopNav = (WrappedComponent) => {
+    console.log(WrappedComponent);
+    return (props) => (
+        <>
+            <SearchStateTopNav />
+            <WrappedComponent {...props} />
         </>
     );
 };

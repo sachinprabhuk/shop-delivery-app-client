@@ -2,7 +2,6 @@ import React from "react";
 import { withRouter } from "react-router";
 import { Navbar } from "react-bootstrap";
 import { ArrowBack } from "@material-ui/icons";
-import { BottomNav } from "./BottomNav";
 
 export const TopNavGoBack = withRouter(({ title, history }) => {
     const handleClick = () => {
