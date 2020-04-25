@@ -10,7 +10,7 @@ export const SearchPage = withStdTopNav(
             <Container>
                 <br />
                 <Card style={{ width: "90%" }} className="m-auto">
-                    <Card.Img variant="top" src="/images/items.jpg"></Card.Img>
+                    <Card.Img variant="top" src="/images/items-min.jpg"></Card.Img>
                     <Card.Footer>
                         <Card.Link
                             as={NavLink}
@@ -24,7 +24,7 @@ export const SearchPage = withStdTopNav(
                 </Card>
                 <br />
                 <Card style={{ width: "90%" }} className="m-auto">
-                    <Card.Img variant="top" src="/images/shops.jpg"></Card.Img>
+                    <Card.Img variant="top" src="/images/shops-min.jpg"></Card.Img>
                     <Card.Footer>
                         <Card.Link
                             as={NavLink}
