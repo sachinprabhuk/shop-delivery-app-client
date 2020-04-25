@@ -5,20 +5,23 @@ import { SearchPage } from "./components/SearchPage";
 import { Profile } from "./components/Profile";
 import { Map as GeoMap } from "./components/Map";
 import { Cart } from "./components/Cart";
-import { SearchResult } from './components/SearchResult';
-import { SearchStateSearchPage } from "./components/SearchStateSearchPage";
+import { SearchView } from "./components/SearchView";
+import { SearchStateSearchPage } from "./components/SearchInput";
 
 function App() {
     return (
         <>
             <Switch>
                 <Route exact path="/map" component={(props) => <GeoMap {...props} title="Map" />} />
-                <Route exact path="/cart" component={(props) => <Cart {...props} title="Your cart" />} />
+                <Route
+                    exact
+                    path="/cart"
+                    component={(props) => <Cart {...props} title="Your cart" />}
+                />
                 <Route exact path="/" component={Home} />
                 <Route exact path="/profile" component={Profile} />
                 <Route exact path="/searchpage" component={SearchPage} />
-                <Route path="/search" component={SearchStateSearchPage} />
-                <Route path="/searchresults" component={SearchResult} />
+                <Route path="/search" component={SearchView} />
             </Switch>
         </>
     );

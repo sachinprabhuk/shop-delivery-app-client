@@ -9,7 +9,7 @@ export const SearchPage = withStdTopNav(
         return (
             <Container>
                 <br />
-                <Card style={{ width: "90%" }} className="m-auto">
+                <Card style={{ width: "85%" }} className="m-auto">
                     <Card.Img variant="top" src="/images/items-min.jpg"></Card.Img>
                     <Card.Footer>
                         <Card.Link
@@ -23,7 +23,7 @@ export const SearchPage = withStdTopNav(
                     </Card.Footer>
                 </Card>
                 <br />
-                <Card style={{ width: "90%" }} className="m-auto">
+                <Card style={{ width: "85%" }} className="m-auto">
                     <Card.Img variant="top" src="/images/shops-min.jpg"></Card.Img>
                     <Card.Footer>
                         <Card.Link
@@ -36,6 +36,10 @@ export const SearchPage = withStdTopNav(
                         </Card.Link>
                     </Card.Footer>
                 </Card>
+                <br />
+                <br />
+                <br />
+                <br />
             </Container>
         );
     })
