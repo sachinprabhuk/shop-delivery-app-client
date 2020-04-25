@@ -1,12 +1,7 @@
 import React from "react";
-import { Navbar, Nav, Image } from "react-bootstrap";
+import { Navbar, Nav } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
-import {
-    MyLocation,
-    AddShoppingCartOutlined,
-    ShoppingCartOutlined,
-    SearchOutlined,
-} from "@material-ui/icons";
+import { MyLocation, ShoppingCartOutlined } from "@material-ui/icons";
 
 export const TopBar = () => {
     return (

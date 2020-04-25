@@ -1,12 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import { Navbar, Nav } from "react-bootstrap";
 import { withRouter } from "react-router";
 import { ArrowBack, SearchOutlined, ShoppingCartOutlined } from "@material-ui/icons";
 import { NavLink } from "react-router-dom";
 
-export const SearchStateTopNav = withRouter(({ history }) => {
-
-    const [inSearchState, setSearchState] = useState(false);
+export const SearchResTopNav = withRouter(({ history, location }) => {
+    const searchType = new URLSearchParams(location.search).get("type");
 
     const onGoBackClick = () => {
         history.goBack();
@@ -14,11 +13,11 @@ export const SearchStateTopNav = withRouter(({ history }) => {
 
     return (
         <Navbar bg="primary" variant="dark" className="justify-content-between">
-            <Navbar.Text onClick={onGoBackClick} >
+            <Navbar.Text onClick={onGoBackClick}>
                 <ArrowBack htmlColor="white" />
             </Navbar.Text>
             <Nav>
-                <Nav.Link>
+                <Nav.Link as={NavLink} to={`/search?type=${searchType}`}>
                     <SearchOutlined htmlColor="white" />
                 </Nav.Link>
                 <Nav.Link as={NavLink} to="/cart">

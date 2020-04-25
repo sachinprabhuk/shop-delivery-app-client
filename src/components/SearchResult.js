@@ -1,18 +1,23 @@
-import React, { useEffect } from 'react';
-import { withSearchStateTopNav } from './HOC/NavHOC';
+import React from "react";
+import { withSearchStateTopNav } from "./HOC/NavHOC";
+import { Container } from "react-bootstrap";
+import { Redirect } from "react-router";
 
 export const SearchResult = withSearchStateTopNav(({ location }) => {
+    const queryParams = new URLSearchParams(location.search);
+    const queryType = queryParams.get("type");
+    const query = queryParams.get("query");
 
-    useEffect(() => {
-        const queryParams = new URLSearchParams(location.search);
-        const queryType = queryParams.get("type");
-        const query = queryParams.get("query");
-        console.log("Query using..");
-        console.log(queryType, query);
+    let toRender = <Redirect to="/404" />;
+    if (query && queryType) {
+        toRender = (
+            <Container>
+                <p>
+                    search for "{queryType}" with query "{query}"
+                </p>
+            </Container>
+        );
+    }
 
-    }, [location])
-
-    return (
-        <p>search result</p>
-    )
+    return toRender;
 });

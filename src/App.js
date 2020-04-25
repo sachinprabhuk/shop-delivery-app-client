@@ -6,6 +6,7 @@ import { Profile } from "./components/Profile";
 import { Map as GeoMap } from "./components/Map";
 import { Cart } from "./components/Cart";
 import { SearchResult } from './components/SearchResult';
+import { SearchStateSearchPage } from "./components/SearchStateSearchPage";
 
 function App() {
     return (
@@ -16,7 +17,8 @@ function App() {
                 <Route exact path="/" component={Home} />
                 <Route exact path="/profile" component={Profile} />
                 <Route exact path="/searchpage" component={SearchPage} />
-                <Route path="/search" component={SearchResult} />
+                <Route path="/search" component={SearchStateSearchPage} />
+                <Route path="/searchresults" component={SearchResult} />
             </Switch>
         </>
     );

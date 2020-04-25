@@ -1,8 +1,8 @@
-import React from 'react';
+import React from "react";
 import { TopBar } from "../navigations/TopBar";
 import { BottomNav } from "../navigations/BottomNav";
 import { TopNavGoBack } from "../navigations/TopNavGoBack";
-import { SearchStateTopNav } from '../navigations/SearchStateTopNav';
+import { SearchResTopNav } from "../navigations/SearchResTopNav";
 
 export const withStdTopNav = (WrappedComponent) => {
     return (props) => (
@@ -35,7 +35,7 @@ export const withSearchStateTopNav = (WrappedComponent) => {
     console.log(WrappedComponent);
     return (props) => (
         <>
-            <SearchStateTopNav />
+            <SearchResTopNav />
             <WrappedComponent {...props} />
         </>
     );
