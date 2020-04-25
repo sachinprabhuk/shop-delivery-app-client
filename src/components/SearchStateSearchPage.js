@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import { Redirect } from "react-router";
-import { Navbar, Nav, FormControl, InputGroup } from "react-bootstrap";
+import { Navbar, Nav, FormControl, InputGroup, Form, Button } from "react-bootstrap";
 import { SearchOutlined, ArrowBack } from "@material-ui/icons";
 
 export const SearchStateSearchPage = ({ history, location }) => {
-
     const [query, setQuery] = useState("");
 
     const searchType = new URLSearchParams(location.search).get("type");
@@ -18,21 +17,26 @@ export const SearchStateSearchPage = ({ history, location }) => {
                         <ArrowBack htmlColor="white" />
                     </Nav.Item>
                 </Nav>
-                <InputGroup>
-                    <FormControl
-                        placeholder={placeHolder}
-                        autoFocus
-                        value={query}
-                        onChange={e => setQuery(e.target.value)}
-                    />
-                    <InputGroup.Append>
-                        <InputGroup.Text onClick={() => {
-                            history.push(`/searchresults?type=${searchType}&query=${query}`)
-                        }}>
-                            <SearchOutlined />
-                        </InputGroup.Text>
-                    </InputGroup.Append>
-                </InputGroup>
+                <Form
+                    onSubmit={() => {
+                        history.push(`/searchresults?type=${searchType}&query=${query}`);
+                    }}
+                    className="w-100"
+                >
+                    <InputGroup>
+                        <FormControl
+                            placeholder={placeHolder}
+                            autoFocus
+                            value={query}
+                            onChange={(e) => setQuery(e.target.value)}
+                        />
+                        <InputGroup.Append>
+                            <InputGroup.Text as={Button} type="submit">
+                                <SearchOutlined />
+                            </InputGroup.Text>
+                        </InputGroup.Append>
+                    </InputGroup>
+                </Form>
             </Navbar>
         );
     }
