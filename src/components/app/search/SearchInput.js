@@ -23,6 +23,7 @@ export const SearchInput = ({ onSubmit, onBackClicked, placeHolder }) => {
                         placeholder={placeHolder}
                         autoFocus
                         value={query}
+                        required
                         onChange={(e) => setQuery(e.target.value)}
                     />
                     <InputGroup.Append>
