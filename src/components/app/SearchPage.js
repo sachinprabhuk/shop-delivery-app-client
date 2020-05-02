@@ -1,6 +1,6 @@
 import React from "react";
 import { Container, Card } from "react-bootstrap";
-import { withStdBottomNav, withStdTopNav } from "./HOC/NavHOC";
+import { withStdBottomNav, withStdTopNav } from "../HOC/NavHOC";
 import { ChevronRight } from "@material-ui/icons";
 import { NavLink } from "react-router-dom";
 

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import ReactMapGL, { Marker, Popup } from "react-map-gl";
-import { withGoBackTopNav } from "./HOC/NavHOC";
+import { withGoBackTopNav } from "../HOC/NavHOC";
 import { LocationOn } from "@material-ui/icons";
 
 const shops = [

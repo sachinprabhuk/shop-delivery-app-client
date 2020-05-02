@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Container } from "react-bootstrap";
 import { Redirect } from "react-router";
 import { SearchInput } from "./SearchInput";
-import { SearchResTopNav } from "./navigations/SearchResTopNav";
+import { SearchResTopNav } from "../navigations/SearchResTopNav";
 
 const searchTypes = ["shops", "products"];
 
@@ -47,8 +47,7 @@ export const SearchView = ({ location, history }) => {
     if (currState.searchMode) {
         toRender = <SearchInput onSubmit={onSearchSubmit} onBackClicked={onInputBackClicked} />;
     } else {
-        
-        if (searchTypes.indexOf(currState.queryType) != -1) {
+        if (searchTypes.indexOf(currState.queryType) !== -1) {
             let content = null;
             if (currState.fetchingResults) {
                 content = <p>Loading....</p>;
