@@ -54,13 +54,9 @@ export const Signup = ({ history }) => {
                         <br />
                         <h6 className="text-center">
                             Have an account already?{" "}
-                            <button
-                                type="button"
-                                className="btn-link"
-                                onClick={() => history.push("/login")}
-                            >
+                            <span onClick={() => history.push("/login")} className="text-primary">
                                 Sign in
-                            </button>
+                            </span>
                         </h6>
                     </Form>
                 </Col>
