@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "shopdeliverymanagement"
+  },
+  "targets": {
+    "shopdeliverymanagement": {
+      "hosting": {
+        "customer": [
+          "shoppingzumap"
+        ]
+      }
+    }
+  }
+}

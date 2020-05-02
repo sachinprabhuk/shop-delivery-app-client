@@ -7,7 +7,6 @@ import { SearchResTopNav } from "./navigations/SearchResTopNav";
 const searchTypes = ["shops", "products"];
 
 export const SearchView = ({ location, history }) => {
-
     const [currState, setCurrState] = useState({
         searchMode: true,
         searchResults: null,
@@ -25,12 +24,11 @@ export const SearchView = ({ location, history }) => {
         });
 
         setTimeout(() => {
-            console.log(currState);
-            // setCurrState({
-            //     ...currState,
-            //     searchResults: [1, 2, 3],
-            //     fetchingResults: false,
-            // });
+            setCurrState({
+                ...currState,
+                searchResults: [1, 2, 3],
+                fetchingResults: false,
+            });
         }, 1000);
     };
 
@@ -49,6 +47,7 @@ export const SearchView = ({ location, history }) => {
     if (currState.searchMode) {
         toRender = <SearchInput onSubmit={onSearchSubmit} onBackClicked={onInputBackClicked} />;
     } else {
+        
         if (searchTypes.indexOf(currState.queryType) != -1) {
             let content = null;
             if (currState.fetchingResults) {

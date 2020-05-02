@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Route, Switch } from "react-router";
 import { Home } from "./components/Home";
 import { SearchPage } from "./components/SearchPage";
@@ -6,7 +6,6 @@ import { Profile } from "./components/Profile";
 import { Map as GeoMap } from "./components/Map";
 import { Cart } from "./components/Cart";
 import { SearchView } from "./components/SearchView";
-import { SearchStateSearchPage } from "./components/SearchInput";
 
 function App() {
     return (
@@ -20,8 +19,8 @@ function App() {
                 />
                 <Route exact path="/" component={Home} />
                 <Route exact path="/profile" component={Profile} />
+                <Route exact path="/search" component={SearchView} />
                 <Route exact path="/searchpage" component={SearchPage} />
-                <Route path="/search" component={SearchView} />
             </Switch>
         </>
     );
