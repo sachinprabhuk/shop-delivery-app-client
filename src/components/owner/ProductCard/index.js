@@ -8,7 +8,7 @@ export default ({ name, imageURL, price, description, rating, id }) => {
             <img src={imageURL} />
         </div>
         <div className="details">
-            <div className="flex">
+            <div className="flex" style={{"paddingRight":"10px"}}>
                 <div>
                     <div className="greyed">name</div>
                     <div className="name">{name}</div>
@@ -16,8 +16,8 @@ export default ({ name, imageURL, price, description, rating, id }) => {
                 <div>
                     <div className="greyed">ratings</div>
                     <div className="ratings">{new Array(5).fill(0).map((_, index) => {
-                        if (index+1 <= rating) return <Lens fontSize="inherit"/>
-                        return <LensOutlined fontSize="inherit"/>
+                        if (index + 1 <= rating) return <Lens key={index} fontSize="inherit"/>
+                        return <LensOutlined key={index} fontSize="inherit"/>
                     })}</div>
                 </div>
             </div>
