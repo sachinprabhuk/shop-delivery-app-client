@@ -5,5 +5,8 @@ export const SEARCH_STATE_RESULT = "SEARCH_STATE_RESULT";
 export const SEARCH_STATE_INVALID = "SEARCH_STATE_INVALID";
 export const SEARCH_STATE_CHECKING = "SEARCH_STATE_CHECKING";
 
-export const SHOP_COLLECTION = "SHOP_COLLECTION";
-export const PRODUCT_COLLECTION = "PRODUCT_COLLECTION";
+export const SEARCH_TYPE_PRODUCT = "products";
+export const SEARCH_TYPE_SHOP = "shops";
+
+export const ITEMS_COLLECTION = "Items";
+export const SHOPS_COLLECTION = "Owners";

@@ -7,10 +7,12 @@ import {
     SEARCH_STATE_INPUT,
     SEARCH_STATE_INVALID,
     SEARCH_STATE_RESULT,
+    SEARCH_TYPE_PRODUCT,
+    SEARCH_TYPE_SHOP
 } from "../../../constants/constants";
 
 const isValidSearchType = (type) => {
-    const searchTypes = ["shops", "products"];
+    const searchTypes = [SEARCH_TYPE_PRODUCT, SEARCH_TYPE_SHOP];
     if (searchTypes.indexOf(type) !== -1) {
         return true;
     }

@@ -7,7 +7,7 @@ export const SearchInput = ({ onSubmit, onBackClicked, placeHolder }) => {
 
     const onSearchSubmit = (e) => {
         e.preventDefault();
-        onSubmit(query);
+        onSubmit(query.toLowerCase());
     };
 
     return (
