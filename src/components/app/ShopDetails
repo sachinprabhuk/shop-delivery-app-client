@@ -1,0 +1,52 @@
+import React, { useState} from "react";
+import * as firebase from 'firebase'
+import { Container, Button } from "react-bootstrap";
+import { withStdTopNav, withStdBottomNav } from "../HOC/NavHOC";
+import { db } from "../../firebase";
+import { Card, Row, Col, Image } from "react-bootstrap";
+import { firstLetterToUpperCase } from "../../utils/utils";
+
+
+export const ShopDetails = withStdBottomNav(withStdTopNav(() => {
+    
+    const [name,setName] = useState("chaya provision stores");
+    const [deliver,setDeliver] = useState(false);
+    const [phone,setPhone] = useState(9918463421);
+    const [address,setAdress] =useState("Market road, Mangalore");
+    const [email, setEmail] = useState("sangeethamobiles@gmail.com")
+    const [image,setImage] = useState("https://firebasestorage.googleapis.com/v0/b/shopdeliverymanagement.appspot.com/o/Shop%20Pictures%2FScreenshot_20200516-195009.jpg?alt=media&token=3e51c626-9845-4f54-8256-894e3c78439c");
+    const [loading,setLoading] = useState(true);
+
+    var message;
+    if(deliver)
+        message="We Offer Delivery!"
+    else
+        message="We don't Offer Delivery yet"
+
+    return (
+        <Container>
+            <Card style={{ padding: "30px 30px", margin: "10px 10px" }}>
+            <Row>
+                <Col xs={3} className="row align-items-center">
+                <h2>{firstLetterToUpperCase(name)}</h2>
+                    <span>
+                    <Image src={image} width="100%" alt="Error" />    
+                    </span>
+                </Col>
+            </Row>
+            <Row>
+                <Col xs={8}>
+                    <span>
+                        <p></p>
+                        <p>Phone:{phone}</p>
+                        <p>{email}</p>
+                        <p>{address}</p>
+                        <p className="font-weight-bold">{message}</p>
+                    </span>
+                </Col>
+            </Row>
+        </Card>            
+        </Container>
+    );
+
+}));
