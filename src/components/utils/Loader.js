@@ -27,7 +27,10 @@ const InnerLoader = ({ message }) => {
 const FullPageWrapper = ({ children }) => {
     return (
         <Container style={{ height: "100vh" }}>
-            <Row className="justify-content-center align-items-center flex-column" style={{ height: "100vh" }}>
+            <Row
+                className="justify-content-center align-items-center flex-column"
+                style={{ height: "100vh" }}
+            >
                 {children}
             </Row>
         </Container>

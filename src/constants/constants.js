@@ -11,4 +11,4 @@ export const SEARCH_TYPE_SHOP = "shops";
 export const ITEMS_COLLECTION = "Items";
 export const SHOPS_COLLECTION = "Owners";
 
-export const MAXIMUM_DELIVERY_DISTANCE_MILES = 30; // 20KM
+export const MAXIMUM_DELIVERY_DISTANCE_MILES = 124; // 200km in miles

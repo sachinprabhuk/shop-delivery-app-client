@@ -6,16 +6,21 @@ import { LocationOn } from "@material-ui/icons";
 import { db } from "../../../firebase";
 import { SHOPS_COLLECTION } from "../../../constants/constants";
 import { Loader } from "../../utils/Loader";
-import { getLowerAndUpperGeoHashFor } from "../../../utils/utils";
+import { getLowerAndUpperGeoHashFor, isUserInShopDeliverRange } from "../../../utils/utils";
 import { MapPopup } from "./MapPopup";
 import { Snackbar } from "@material-ui/core";
+
+let userLocation = {
+    latitude: null,
+    longitude: null,
+};
 
 // Pass only the initial latitude and longitude, rest is handled by map itself
 export const Map = withGoBackTopNav(() => {
     const [viewport, setViewport] = useState({
         latitude: 13.3294,
         longitude: 74.7579,
-        zoom: 11,
+        zoom: 9,
         width: "100%",
         height: "100%",
     });
@@ -35,6 +40,9 @@ export const Map = withGoBackTopNav(() => {
         window.geohash = geohash;
 
         const getShopsNearUserLocation = async ({ coords: { latitude, longitude } }) => {
+            userLocation.latitude = latitude;
+            userLocation.longitude = longitude;
+
             const { lower, upper } = getLowerAndUpperGeoHashFor(latitude, longitude);
             try {
                 const rawData = await db
@@ -43,26 +51,33 @@ export const Map = withGoBackTopNav(() => {
                     .where("geohash", "<=", upper)
                     .get();
 
+                console.log(lower, upper);
                 if (rawData && rawData.docs.length !== 0) {
-                    const data = rawData.docs.map((rdata) => {
-                        const el = rdata.data();
-                        return {
-                            id: rdata.id,
-                            name: el.name,
-                            address: el.address,
-                            location: {
-                                latitude: el.coordinates.latitude,
-                                longitude: el.coordinates.longitude,
-                            },
-                        };
-                    });
-                    setViewport({
-                        ...viewport,
-                        latitude: latitude,
-                        longitude: longitude,
-                    });
-                    setShops(data);
+                    const data = rawData.docs
+                        .map((rdata) => {
+                            const el = rdata.data();
+                            return {
+                                id: rdata.id,
+                                name: el.name,
+                                address: el.address,
+                                location: {
+                                    latitude: el.coordinates.latitude,
+                                    longitude: el.coordinates.longitude,
+                                },
+                                range: el.range,
+                            };
+                        })
+                        .filter((shop) => isUserInShopDeliverRange(shop, latitude, longitude));
+                    userLocation = { latitude, longitude };
+                    setViewport({ ...viewport, latitude, longitude });
+                    if (data && data.length !== 0) {
+                        setShops(data);
+                    } else {
+                        setError("No shops found around your location!!");
+                        setSnackBarOpen(true);
+                    }
                 } else {
+                    console.log("hey");
                     setError("No shops found around your location!!");
                     setSnackBarOpen(true);
                 }
@@ -76,11 +91,7 @@ export const Map = withGoBackTopNav(() => {
 
         window.addEventListener("keydown", keyDownListener);
 
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(getShopsNearUserLocation);
-        } else {
-            setSearchingShops(false);
-        }
+        navigator.geolocation.getCurrentPosition(getShopsNearUserLocation);
 
         return () => {
             window.removeEventListener("keydown", keyDownListener);
@@ -111,7 +122,7 @@ export const Map = withGoBackTopNav(() => {
                                 </Marker>
                             );
                         })}
-                    <Marker latitude={viewport.latitude} longitude={viewport.longitude}>
+                    <Marker {...userLocation}>
                         <LocationOn style={{ color: "blue" }} fontSize="large" />
                     </Marker>
                     {selectedShop && (
