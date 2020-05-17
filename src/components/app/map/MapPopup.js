@@ -19,7 +19,7 @@ export const MapPopup = ({ selectedShop, closeClicked }) => {
             <div className="mx-2">
                 <p className="my-0">{firstLetterToUpperCase(selectedShop.name)}</p>
                 <p className="text-secondary my-0">{selectedShop.address}</p>
-                <Link to={`/search?type=shops&query=${selectedShop.name}`}>
+                <Link to={`/details/shop/${selectedShop.id}`}>
                     visit shop
                     <Launch fontSize="inherit" />
                 </Link>

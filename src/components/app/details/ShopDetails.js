@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { Container } from "react-bootstrap";
-import { withStdTopNav } from "../../HOC/NavHOC";
 import { db } from "../../../firebase";
 import { Image } from "react-bootstrap";
 import { firstLetterToUpperCase } from "../../../utils/utils";
 import { useParams } from "react-router";
 import { SHOPS_COLLECTION } from "../../../constants/constants";
 import { Loader } from "../../utils/Loader";
+import { DetailPageTopbar } from "../../navigations/DetailPageTopbar";
 
-export const ShopDetails = withStdTopNav(() => {
+export const ShopDetails = ({ history }) => {
     const { id } = useParams();
     const [shop, setShop] = useState(null);
     const [fetching, setFetching] = useState(true);
@@ -65,5 +65,14 @@ export const ShopDetails = withStdTopNav(() => {
             );
         }
     }
-    return toRender;
-});
+    return (
+        <>
+            <DetailPageTopbar
+                searchClicked={() => {
+                    history.push("/search?type=shops");
+                }}
+            />
+            {toRender}
+        </>
+    );
+};

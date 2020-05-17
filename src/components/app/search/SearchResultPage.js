@@ -53,7 +53,7 @@ export const SearchResultPage = withRouter(({ location, onSearchClick, onBackCli
             } catch (e) {
                 setFetchError("Error while fetching results!!!");
                 setFetching(false);
-                console.log(e);
+                // console.log(e);
             }
         };
         fetchOperation();

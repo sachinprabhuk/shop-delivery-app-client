@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { Container, Button } from "react-bootstrap";
-import { withStdTopNav } from "../../HOC/NavHOC";
 import { Image } from "react-bootstrap";
 import { firstLetterToUpperCase } from "../../../utils/utils";
 import { useParams } from "react-router";
 import { db } from "../../../firebase";
 import { ITEMS_COLLECTION } from "../../../constants/constants";
 import { Loader } from "../../utils/Loader";
+import { DetailPageTopbar } from "../../navigations/DetailPageTopbar";
 
-export const ProductDetails = withStdTopNav(() => {
+export const ProductDetails = ({ history }) => {
     const { id } = useParams();
     const [product, setProduct] = useState(null);
     const [fetching, setFetching] = useState(true);
@@ -61,5 +61,14 @@ export const ProductDetails = withStdTopNav(() => {
             );
         }
     }
-    return toRender;
-});
+    return (
+        <>
+            <DetailPageTopbar
+                searchClicked={() => {
+                    history.push("/search?type=products");
+                }}
+            />
+            {toRender}
+        </>
+    );
+};
