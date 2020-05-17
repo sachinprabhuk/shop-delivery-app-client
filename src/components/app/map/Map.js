@@ -15,7 +15,7 @@ export const Map = withGoBackTopNav(() => {
     const [viewport, setViewport] = useState({
         latitude: 13.3294,
         longitude: 74.7579,
-        zoom: 10,
+        zoom: 11,
         width: "100%",
         height: "100%",
     });
@@ -51,10 +51,15 @@ export const Map = withGoBackTopNav(() => {
                             name: el.name,
                             address: el.address,
                             location: {
-                                latitude: el.coordinates.Pc,
-                                longitude: el.coordinates.Vc,
+                                latitude: el.coordinates.latitude,
+                                longitude: el.coordinates.longitude,
                             },
                         };
+                    });
+                    setViewport({
+                        ...viewport,
+                        latitude: latitude,
+                        longitude: longitude,
                     });
                     setShops(data);
                 } else {
@@ -106,6 +111,9 @@ export const Map = withGoBackTopNav(() => {
                                 </Marker>
                             );
                         })}
+                    <Marker latitude={viewport.latitude} longitude={viewport.longitude}>
+                        <LocationOn style={{ color: "blue" }} fontSize="large" />
+                    </Marker>
                     {selectedShop && (
                         <MapPopup
                             selectedShop={selectedShop}
