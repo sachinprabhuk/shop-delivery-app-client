@@ -2,7 +2,7 @@ import React from "react";
 import { Route, Switch, Redirect } from "react-router";
 import { Cart } from "./app/Cart";
 import { Home } from "./app/Home";
-import { Map as GeoMap } from "./app/Map";
+import { Map as GeoMap } from "./app/map/Map";
 import { Profile } from "./app/Profile";
 import { SearchMain } from "./app/search/SearchMain";
 import { SearchPage } from "./app/SearchPage";

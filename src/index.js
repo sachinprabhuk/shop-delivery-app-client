@@ -8,13 +8,11 @@ import { BrowserRouter } from "react-router-dom";
 import { AuthContextProvider } from "./contexts/AuthContext";
 
 ReactDOM.render(
-    <React.StrictMode>
-        <BrowserRouter>
-            <AuthContextProvider>
-                <Main />
-            </AuthContextProvider>
-        </BrowserRouter>
-    </React.StrictMode>,
+    <BrowserRouter>
+        <AuthContextProvider>
+            <Main />
+        </AuthContextProvider>
+    </BrowserRouter>,
     document.getElementById("root")
 );
 
