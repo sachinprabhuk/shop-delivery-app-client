@@ -10,3 +10,4 @@ export const SEARCH_TYPE_SHOP = "shops";
 
 export const ITEMS_COLLECTION = "Items";
 export const SHOPS_COLLECTION = "Owners";
+export const USER_COLLECTION = "Users";
