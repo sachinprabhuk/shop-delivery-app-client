@@ -1,23 +1,28 @@
 import React from "react";
-import { Row, Col, Image, Card } from "react-bootstrap";
+import { Row, Col, Image } from "react-bootstrap";
 import { firstLetterToUpperCase } from "../../../../utils/utils";
+import { Link } from "react-router-dom";
 
-export const ProductCard = ({ name, image, price, details }) => {
+export const ProductCard = ({ name, image, price, details, id, unit }) => {
     return (
-        <Card style={{ padding: "10px 12px", margin: "10px 0px" }}>
-            <Row>
-                <Col xs={3} className="row align-items-center">
-                    <Image src={image} width="100%" alt="Error" />
+        <Link
+            to={`/details/product/${id}`}
+            className="text-dark text-decoration-none border-bottom d-block"
+        >
+            <Row className="py-2">
+                <Col xs={4} className="row align-items-center">
+                    <Image src={image} width="100px" height="100px" alt="Error" />
                 </Col>
-                <Col xs={1}></Col>
                 <Col xs={4}>
                     <h5>{firstLetterToUpperCase(name)}</h5>
                     <span>{details}</span>
                 </Col>
                 <Col xs={4} className="text-right" style={{ padding: "0px" }}>
-                    <p className="font-weight-bold">Rs. {price}</p>
+                    <p className="font-weight-bold">
+                        Rs. {price}/{unit}
+                    </p>
                 </Col>
             </Row>
-        </Card>
+        </Link>
     );
 };

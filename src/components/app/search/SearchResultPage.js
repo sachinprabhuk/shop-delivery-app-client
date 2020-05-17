@@ -43,7 +43,6 @@ export const SearchResultPage = withRouter(({ location, onSearchClick, onBackCli
                     const processedData = data.docs.map((el) => {
                         const data = el.data();
                         data.id = el.id;
-                        console.log(JSON.stringify(data));
                         return data;
                     });
                     setResultType(searchType);
