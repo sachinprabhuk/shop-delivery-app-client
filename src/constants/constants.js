@@ -12,3 +12,4 @@ export const ITEMS_COLLECTION = "Items";
 export const SHOPS_COLLECTION = "Owners";
 
 export const MAXIMUM_DELIVERY_DISTANCE_MILES = 124; // 200km in miles
+export const USER_COLLECTION = "Users";
