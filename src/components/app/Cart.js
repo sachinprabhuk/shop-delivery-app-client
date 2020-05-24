@@ -1,5 +1,5 @@
 import React, { useContext, useCallback } from "react";
-import { Container } from "react-bootstrap";
+import { Container, Row, Col, Button } from "react-bootstrap";
 import { withGoBackTopNav } from "../HOC/NavHOC";
 import { useAsync } from "../../hooks/useAsync";
 import { db } from "../../firebase";
@@ -17,11 +17,13 @@ export const Cart = withGoBackTopNav(() => {
         if (!raw || raw.docs.length === 0) {
             throw new Error();
         } else {
-            return raw.docs.map((el) => {
+            const cartItems = raw.docs.map((el) => {
                 const doc = el.data();
                 doc.id = el.id;
                 return doc;
             });
+            console.log("cart items -> ", cartItems);
+            return cartItems;
         }
     }, [uid]);
 
@@ -31,17 +33,26 @@ export const Cart = withGoBackTopNav(() => {
     if (error) {
         toRender = <p>{error}</p>;
     } else if (data) {
-        console.log(data);
         toRender = (
-            <ul>
-                {data.map((el) => {
-                    return (
-                        <li key={el.id}>
-                            {el.product.name} - {el.shop.name} - {el.price}
-                        </li>
-                    );
-                })}
-            </ul>
+            <>
+                <ul>
+                    {data.map((el) => {
+                        return (
+                            <li key={el.id}>
+                                {el.product.name} - {el.shop.name} - {el.price}
+                            </li>
+                        );
+                    })}
+                </ul>
+                <Row>
+                    <Col>
+                        {data.reduce((acc, curr) => acc + Number.parseFloat(curr.price), 0)} Rs.
+                    </Col>
+                    <Col>
+                        <Button variant="warning">Place order</Button>
+                    </Col>
+                </Row>
+            </>
         );
     }
 

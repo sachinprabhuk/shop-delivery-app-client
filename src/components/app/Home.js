@@ -1,11 +1,54 @@
-import React from "react";
+import React, { useContext, useCallback } from "react";
 import { Container } from "react-bootstrap";
 import { withStdTopNav, withStdBottomNav } from "../HOC/NavHOC";
+import { AuthContext } from "../../contexts/AuthContext";
+import { useAsync } from "../../hooks/useAsync";
+import { USER_COLLECTION, ITEMS_COLLECTION } from "../../constants/constants";
+import { db } from "../../firebase";
+import { Loader } from "../utils/Loader";
 
-export const Home = withStdBottomNav(withStdTopNav(() => {
-    return (
-        <Container>
-            <p>Recommendations will be here</p>
-        </Container>
-    );
-}));
+export const Home = withStdBottomNav(
+    withStdTopNav(() => {
+        const {
+            user: { uid },
+        } = useContext(AuthContext);
+
+        const fetchRecommendations = useCallback(async () => {
+            const rawRecommendationDoc = await db.doc(`${USER_COLLECTION}/${uid}/ML/Items`).get();
+            const recommendationDoc = rawRecommendationDoc.data();
+            const sortedData = Object.entries(recommendationDoc).sort((a, b) => b[1] - a[1]);
+            const recommendationPromises = sortedData.map(([itemID]) => {
+                return db.doc(`${ITEMS_COLLECTION}/${itemID}`).get();
+            });
+            const recommendationsRaw = await Promise.all(recommendationPromises);
+            const recommendations = recommendationsRaw.map((el) => {
+                const doc = el.data();
+                doc.id = el.id;
+                return doc;
+            });
+            console.log("Recommendations -> ", recommendations);
+            return recommendations;
+        }, [uid]);
+
+        const { data, error } = useAsync(fetchRecommendations);
+
+        let toRender = <Loader fullPage message="loading recommendations..." />;
+        if (error) {
+            toRender = <p>{error}</p>;
+        } else if (data) {
+            toRender = (
+                <ul>
+                    {data.map((el) => {
+                        return (
+                            <li key={el.id}>
+                                {el.name} - {el.price}
+                            </li>
+                        );
+                    })}
+                </ul>
+            );
+        }
+
+        return <Container>{toRender}</Container>;
+    })
+);
