@@ -1,35 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Container } from "react-bootstrap";
-import { db } from "../../../firebase";
 import { Image } from "react-bootstrap";
 import { firstLetterToUpperCase } from "../../../utils/utils";
 import { useParams } from "react-router";
 import { SHOPS_COLLECTION } from "../../../constants/constants";
 import { Loader } from "../../utils/Loader";
 import { DetailPageTopbar } from "../../navigations/DetailPageTopbar";
+import { useFetchFirestore } from "../../../hooks/useFetchFirestore";
 
 export const ShopDetails = ({ history }) => {
     const { id } = useParams();
-    const [shop, setShop] = useState(null);
-    const [fetching, setFetching] = useState(true);
-    const [error, setError] = useState(null);
-
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const data = await db.collection(SHOPS_COLLECTION).doc(id).get();
-                if (!data || !data.data()) {
-                    setError("No shops found!!");
-                } else {
-                    setShop(data.data());
-                }
-            } catch (e) {
-                setError("Error while fetching product!!");
-            }
-            setFetching(false);
-        };
-        fetchData();
-    }, [id]);
+    const [fetching, error, shop] = useFetchFirestore(`${SHOPS_COLLECTION}/${id}`);
 
     let toRender = <Loader fullPage message="Loading..." />;
     if (!fetching) {

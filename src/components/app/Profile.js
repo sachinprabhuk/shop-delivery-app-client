@@ -16,7 +16,7 @@ export const Profile = withStdBottomNav(
         const [phone, setPhone] = useState("-");
         const [address, setAddress] = useState("-");
         const [image, setImage] = useState("/images/blank.jpg");
-        const [email, setEmail] = useState(firebase.auth().currentUser.email);
+        const [email] = useState(firebase.auth().currentUser.email);
 
         useEffect(() => {
             const email = firebase.auth().currentUser.email;
@@ -70,7 +70,7 @@ export const Profile = withStdBottomNav(
                                 roundedSize="13"
                             />
                         </div>
-                        <span className="text-center" value={{ name }}></span>
+                        <span className="text-center">{name}</span>
                         <br />
                         <div className="text-center">
                             <Button className="d-inline" variant="primary">
@@ -112,14 +112,11 @@ export const Profile = withStdBottomNav(
                             </span>
                         </Card>
 
-                        <br />
-                        <br />
-                        <br />
                         <Button variant="danger" onClick={handleClick}>
                             Logout
                         </Button>
                         <br />
-
+                        <br />
                         <br />
                         <br />
                         <br />

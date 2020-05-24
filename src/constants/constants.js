@@ -10,6 +10,11 @@ export const SEARCH_TYPE_SHOP = "shops";
 
 export const ITEMS_COLLECTION = "Items";
 export const SHOPS_COLLECTION = "Owners";
+export const CART_COLLECTION = "CartList";
 
 export const MAXIMUM_DELIVERY_DISTANCE_MILES = 124; // 200km in miles
 export const USER_COLLECTION = "Users";
+
+export const SUCCESS_FETCH = "SUCCESS_FETCH";
+export const FAILURE_FETCH = "FAILURE_FETCH";
+export const START_FETCH = "START_FETCH";

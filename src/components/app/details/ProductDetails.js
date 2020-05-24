@@ -1,33 +1,53 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useContext, useCallback } from "react";
 import { Container, Button } from "react-bootstrap";
 import { Image } from "react-bootstrap";
 import { firstLetterToUpperCase } from "../../../utils/utils";
 import { useParams } from "react-router";
-import { db } from "../../../firebase";
-import { ITEMS_COLLECTION } from "../../../constants/constants";
+import { ITEMS_COLLECTION, CART_COLLECTION } from "../../../constants/constants";
 import { Loader } from "../../utils/Loader";
 import { DetailPageTopbar } from "../../navigations/DetailPageTopbar";
+import { useFetchFirestore } from "../../../hooks/useFetchFirestore";
+import { ShopListModal } from "./utils/ShopListModal";
+import { db } from "../../../firebase";
+import { AuthContext } from "../../../contexts/AuthContext";
 
 export const ProductDetails = ({ history }) => {
+    const {
+        user: { uid },
+    } = useContext(AuthContext);
     const { id } = useParams();
-    const [product, setProduct] = useState(null);
-    const [fetching, setFetching] = useState(true);
-    const [error, setError] = useState(null);
-
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const data = await db.collection(ITEMS_COLLECTION).doc(id).get();
-                setProduct(data.data());
-            } catch (e) {
-                setError("Error while fetching product!!");
-            }
-            setFetching(false);
-        };
-        fetchData();
-    }, [id]);
+    const [fetching, error, product] = useFetchFirestore(`${ITEMS_COLLECTION}/${id}`);
+    const [showModal, setShowModal] = useState(false);
+    const [addingToCart, setAddingToCart] = useState(false);
 
     let toRender = <Loader fullPage message="loading..." />;
+
+    const selectShop = useCallback(
+        async ({ id: shopID, name, price }) => {
+            try {
+                setAddingToCart(true);
+                await db.collection(CART_COLLECTION).add({
+                    userID: uid,
+                    price,
+                    shop: {
+                        id: shopID,
+                        name,
+                    },
+                    product: {
+                        id: product.id,
+                        name: product.name,
+                        image: product.image,
+                    },
+                });
+            } catch (e) {
+                // not handling this case
+            }
+            setAddingToCart(false);
+            setShowModal(false);
+        },
+        [product, uid]
+    );
+
     if (!fetching) {
         if (error) {
             toRender = (
@@ -53,7 +73,7 @@ export const ProductDetails = ({ history }) => {
                             <p className="font-weight-bold">
                                 Rs. {product.price} per {product.unit}
                             </p>
-                            <Button>Add to Cart</Button>
+                            <Button onClick={() => setShowModal(true)}>Add to Cart</Button>
                             <p>{product.details}</p>
                         </div>
                     </div>
@@ -69,6 +89,12 @@ export const ProductDetails = ({ history }) => {
                 }}
             />
             {toRender}
+            <ShopListModal
+                show={showModal}
+                setShow={setShowModal}
+                selectShop={selectShop}
+                addingToCart={addingToCart}
+            />
         </>
     );
 };

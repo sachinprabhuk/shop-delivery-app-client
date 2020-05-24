@@ -69,7 +69,7 @@ export const Map = withGoBackTopNav(() => {
                         })
                         .filter((shop) => isUserInShopDeliverRange(shop, latitude, longitude));
                     userLocation = { latitude, longitude };
-                    setViewport({ ...viewport, latitude, longitude });
+                    setViewport((viewport) => ({ ...viewport, latitude, longitude }));
                     if (data && data.length !== 0) {
                         setShops(data);
                     } else {
