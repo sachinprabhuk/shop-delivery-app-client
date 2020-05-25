@@ -13,7 +13,7 @@ const reducer = (state, action) => {
     }
 };
 
-export const useFetchFirestore = (path, fetchImmediately = true) => {
+export const useFetchFirestoreDoc = (path, fetchImmediately = true) => {
     const [{ fetching, error, data }, dispatch] = useReducer(reducer, {
         data: null,
         fetching: true,

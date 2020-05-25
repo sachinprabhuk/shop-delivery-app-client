@@ -6,7 +6,7 @@ import { useParams } from "react-router";
 import { ITEMS_COLLECTION, CART_COLLECTION } from "../../../constants/constants";
 import { Loader } from "../../utils/Loader";
 import { DetailPageTopbar } from "../../navigations/DetailPageTopbar";
-import { useFetchFirestore } from "../../../hooks/useFetchFirestore";
+import { useFetchFirestoreDoc } from "../../../hooks/useFetchFirestoreDoc";
 import { ShopListModal } from "./utils/ShopListModal";
 import { db } from "../../../firebase";
 import { AuthContext } from "../../../contexts/AuthContext";
@@ -16,19 +16,46 @@ export const ProductDetails = ({ history }) => {
         user: { uid },
     } = useContext(AuthContext);
     const { id } = useParams();
-    const [fetching, error, product] = useFetchFirestore(`${ITEMS_COLLECTION}/${id}`);
+    const [fetching, error, product] = useFetchFirestoreDoc(`${ITEMS_COLLECTION}/${id}`);
     const [showModal, setShowModal] = useState(false);
     const [addingToCart, setAddingToCart] = useState(false);
 
     let toRender = <Loader fullPage message="loading..." />;
 
+    // useEffect(() => {
+    //     const updater = async () => {
+    //         const clicksDoc = await db.doc(`${USER_COLLECTION}/${uid}/ML/Clicks`).get();
+    //         const clicks = clicksDoc.data();
+    //         let updatedClicks = null;
+    //         if (!clicks) {
+    //             updatedClicks = {
+    //                 [id]: 1,
+    //             };
+    //         } else {
+    //             const seenBefore = clicks.hasOwnProperty(id);
+    //             if (seenBefore) {
+    //                 const clickForCurrProduct = Number.parseInt(clicks[id]);
+    //                 clicks[id] = clickForCurrProduct + 1;
+    //             } else {
+    //                 clicks[id] = 1;
+    //             }
+    //             updatedClicks = clicks;
+    //         }
+    //         await db.doc(`${USER_COLLECTION}/${uid}/ML/Clicks`).update({
+    //             ...updatedClicks,
+    //         });
+    //     };
+    //     updater();
+    // }, [id, uid]);
+
     const selectShop = useCallback(
-        async ({ id: shopID, name, price }) => {
+        async ({ id: shopID, name, price }, quantity) => {
             try {
                 setAddingToCart(true);
                 await db.collection(CART_COLLECTION).add({
                     userID: uid,
-                    price,
+                    price: Number.parseFloat(price),
+                    quantity: Number.parseInt(quantity),
                     shop: {
                         id: shopID,
                         name,
@@ -94,6 +121,7 @@ export const ProductDetails = ({ history }) => {
                 setShow={setShowModal}
                 selectShop={selectShop}
                 addingToCart={addingToCart}
+                product={product}
             />
         </>
     );

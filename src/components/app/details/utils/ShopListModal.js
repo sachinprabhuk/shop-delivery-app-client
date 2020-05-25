@@ -1,5 +1,5 @@
-import React, { useEffect, useReducer, useCallback } from "react";
-import { Button, Modal, ListGroup, Row, Col } from "react-bootstrap";
+import React, { useEffect, useReducer, useCallback, useRef } from "react";
+import { Button, Modal, ListGroup, Row, Col, Form } from "react-bootstrap";
 import { useParams } from "react-router";
 import {
     ITEMS_COLLECTION,
@@ -43,7 +43,7 @@ const reducer = (state, action) => {
     }
 };
 
-export const ShopListModal = ({ show, setShow, selectShop, addingToCart }) => {
+export const ShopListModal = ({ show, setShow, selectShop, addingToCart, product }) => {
     const { id } = useParams();
 
     const [{ fetching, error, shopList, active }, dispatch] = useReducer(reducer, {
@@ -52,6 +52,7 @@ export const ShopListModal = ({ show, setShow, selectShop, addingToCart }) => {
         shopList: null,
         active: null,
     });
+    const quantityInput = useRef(null);
 
     const fetchData = useCallback(async () => {
         try {
@@ -66,6 +67,7 @@ export const ShopListModal = ({ show, setShow, selectShop, addingToCart }) => {
                 throw new Error("error");
             } else {
                 const shopList = data.docs.map((el) => el.data());
+                console.log(shopList);
                 dispatch({
                     type: SUCCESS_FETCH,
                     payload: shopList,
@@ -104,11 +106,13 @@ export const ShopListModal = ({ show, setShow, selectShop, addingToCart }) => {
                                 onClick={() => dispatch({ type: SHOP_SELECTED, payload: index })}
                             >
                                 <Row>
-                                    <Col xs={10}>
+                                    <Col xs={8}>
                                         <p className="m-0 font-weight-bold">{el.name}</p>
                                         <p className="m-0">{el.address}</p>
                                     </Col>
-                                    <Col xs={2}>{el.price} Rs.</Col>
+                                    <Col xs={4} className="text-align-right">
+                                        {el.price} Rs.
+                                    </Col>
                                 </Row>
                             </ListGroup.Item>
                         );
@@ -125,17 +129,35 @@ export const ShopListModal = ({ show, setShow, selectShop, addingToCart }) => {
                     <Modal.Title>Select a shop</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>{modalBody}</Modal.Body>
-                <Modal.Footer className="justify-content-start">
-                    <Button
-                        variant="warning"
-                        onClick={() => {
-                            selectShop(shopList[active]);
+                <Modal.Footer>
+                    <Form
+                        onSubmit={(e) => {
+                            e.preventDefault();
+                            selectShop(shopList[active], quantityInput.current.value);
                         }}
-                        disabled={addingToCart}
                     >
-                        Add to cart
-                        {addingToCart ? <Loader /> : null}
-                    </Button>
+                        <Row>
+                            <Col xs={7} className="mx-0">
+                                <Form.Control
+                                    type="number"
+                                    placeholder={`Quantitiy ${product && `in ${product.unit}s`}`}
+                                    ref={quantityInput}
+                                    required
+                                />
+                            </Col>
+                            <Col xs={5}>
+                                <Form.Control
+                                    as={Button}
+                                    type="submit"
+                                    variant="warning"
+                                    disabled={addingToCart}
+                                    className="d-block m-0"
+                                >
+                                    Add to cart
+                                </Form.Control>
+                            </Col>
+                        </Row>
+                    </Form>
                 </Modal.Footer>
             </Modal>
         </>

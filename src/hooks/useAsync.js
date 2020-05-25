@@ -26,6 +26,7 @@ export const useAsync = (cb, fetchImmediate = true) => {
             console.log("calling useAsync fetch....");
             dispatch({ type: START_FETCH });
             const data = await cb();
+            console.log("data -> ", data);
             dispatch({ type: SUCCESS_FETCH, payload: data });
         } catch (e) {
             dispatch({ type: FAILURE_FETCH, payload: "error while fetching data" });
