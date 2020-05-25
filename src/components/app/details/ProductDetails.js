@@ -17,7 +17,6 @@ import { db } from "../../../firebase";
 import { AuthContext } from "../../../contexts/AuthContext";
 
 const getCurrentClicksForProduct = (doc, prodID) => {
-
     // we return 1 in not seen case, because log10(1) === 0
     if (!doc) {
         return 1;
@@ -45,15 +44,12 @@ export const ProductDetails = ({ history }) => {
     useEffect(() => {
         const updater = async () => {
             const clicksDocRaw = await db.doc(`${USER_COLLECTION}/${uid}/ML/Clicks`).get();
-            const clicksDoc = clicksDocRaw.data();
-
+            const clicksDoc = clicksDocRaw.data() || {};
             const currentClicks = getCurrentClicksForProduct(clicksDoc, id);
-
-            let updatedClicks = clicksDoc;
-            updatedClicks[id] = currentClicks + 1;
+            clicksDoc[id] = currentClicks + 1;
 
             const promise1 = db.doc(`${USER_COLLECTION}/${uid}/ML/Clicks`).update({
-                ...updatedClicks,
+                ...clicksDoc,
             });
 
             const promise2 = async () => {
@@ -64,7 +60,7 @@ export const ProductDetails = ({ history }) => {
                 if (rawDoc.docs.length > 0) {
                     const doc = rawDoc.docs[0].data();
                     doc[id] = 10 * Math.log10(currentClicks + 1);
-                    await db.doc(`${CLICKS_COLLECTION}/${rawDoc.docs[0].id}`).update(doc);
+                    await db.doc(`${CLICKS_COLLECTION}/${rawDoc.docs[0].id}`).update({ ...doc });
                 } else {
                     const doc = {
                         [id]: 10 * Math.log10(currentClicks + 1),
