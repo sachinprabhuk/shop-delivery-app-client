@@ -1,15 +1,35 @@
-import React, { useState, useContext, useCallback } from "react";
+import React, { useState, useContext, useCallback, useEffect } from "react";
 import { Container, Button } from "react-bootstrap";
 import { Image } from "react-bootstrap";
 import { firstLetterToUpperCase } from "../../../utils/utils";
 import { useParams } from "react-router";
-import { ITEMS_COLLECTION, CART_COLLECTION } from "../../../constants/constants";
+import {
+    ITEMS_COLLECTION,
+    CART_COLLECTION,
+    CLICKS_COLLECTION,
+    USER_COLLECTION,
+} from "../../../constants/constants";
 import { Loader } from "../../utils/Loader";
 import { DetailPageTopbar } from "../../navigations/DetailPageTopbar";
 import { useFetchFirestoreDoc } from "../../../hooks/useFetchFirestoreDoc";
 import { ShopListModal } from "./utils/ShopListModal";
 import { db } from "../../../firebase";
 import { AuthContext } from "../../../contexts/AuthContext";
+
+const getCurrentClicksForProduct = (doc, prodID) => {
+
+    // we return 1 in not seen case, because log10(1) === 0
+    if (!doc) {
+        return 1;
+    } else {
+        const seenBefore = doc.hasOwnProperty(prodID);
+        if (seenBefore) {
+            return Number.parseInt(doc[prodID]);
+        } else {
+            return 1;
+        }
+    }
+};
 
 export const ProductDetails = ({ history }) => {
     const {
@@ -22,31 +42,42 @@ export const ProductDetails = ({ history }) => {
 
     let toRender = <Loader fullPage message="loading..." />;
 
-    // useEffect(() => {
-    //     const updater = async () => {
-    //         const clicksDoc = await db.doc(`${USER_COLLECTION}/${uid}/ML/Clicks`).get();
-    //         const clicks = clicksDoc.data();
-    //         let updatedClicks = null;
-    //         if (!clicks) {
-    //             updatedClicks = {
-    //                 [id]: 1,
-    //             };
-    //         } else {
-    //             const seenBefore = clicks.hasOwnProperty(id);
-    //             if (seenBefore) {
-    //                 const clickForCurrProduct = Number.parseInt(clicks[id]);
-    //                 clicks[id] = clickForCurrProduct + 1;
-    //             } else {
-    //                 clicks[id] = 1;
-    //             }
-    //             updatedClicks = clicks;
-    //         }
-    //         await db.doc(`${USER_COLLECTION}/${uid}/ML/Clicks`).update({
-    //             ...updatedClicks,
-    //         });
-    //     };
-    //     updater();
-    // }, [id, uid]);
+    useEffect(() => {
+        const updater = async () => {
+            const clicksDocRaw = await db.doc(`${USER_COLLECTION}/${uid}/ML/Clicks`).get();
+            const clicksDoc = clicksDocRaw.data();
+
+            const currentClicks = getCurrentClicksForProduct(clicksDoc, id);
+
+            let updatedClicks = clicksDoc;
+            updatedClicks[id] = currentClicks + 1;
+
+            const promise1 = db.doc(`${USER_COLLECTION}/${uid}/ML/Clicks`).update({
+                ...updatedClicks,
+            });
+
+            const promise2 = async () => {
+                const rawDoc = await db
+                    .collection(CLICKS_COLLECTION)
+                    .where("user", "==", uid)
+                    .get();
+                if (rawDoc.docs.length > 0) {
+                    const doc = rawDoc.docs[0].data();
+                    doc[id] = 10 * Math.log10(currentClicks + 1);
+                    await db.doc(`${CLICKS_COLLECTION}/${rawDoc.docs[0].id}`).update(doc);
+                } else {
+                    const doc = {
+                        [id]: 10 * Math.log10(currentClicks + 1),
+                        user: uid,
+                    };
+                    await db.collection(CLICKS_COLLECTION).add(doc);
+                }
+            };
+
+            await Promise.all([promise1, promise2()]);
+        };
+        updater();
+    }, [id, uid]);
 
     const selectShop = useCallback(
         async ({ id: shopID, name, price }, quantity) => {
