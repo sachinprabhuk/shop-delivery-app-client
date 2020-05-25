@@ -9,7 +9,6 @@ export const Signup = ({ history }) => {
     const [phone, setPhone] = useState("");
     const [address, setAddress] = useState("");
     const [name, setName] = useState("");
-    const [doc, setDoc] = useState("");;
     const [newpass, setNewPassword] = useState(false);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
