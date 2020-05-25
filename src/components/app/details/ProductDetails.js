@@ -8,6 +8,7 @@ import {
     CART_COLLECTION,
     CLICKS_COLLECTION,
     USER_COLLECTION,
+    ML_COLLECTION,
 } from "../../../constants/constants";
 import { Loader } from "../../utils/Loader";
 import { DetailPageTopbar } from "../../navigations/DetailPageTopbar";
@@ -30,6 +31,10 @@ const getCurrentClicksForProduct = (doc, prodID) => {
     }
 };
 
+const doesFirestoreDocExists = (doc) => {
+    return doc && doc.data();
+};
+
 export const ProductDetails = ({ history }) => {
     const {
         user: { uid },
@@ -44,15 +49,27 @@ export const ProductDetails = ({ history }) => {
     useEffect(() => {
         const updater = async () => {
             const clicksDocRaw = await db.doc(`${USER_COLLECTION}/${uid}/ML/Clicks`).get();
-            const clicksDoc = clicksDocRaw && clicksDocRaw.data() ? clicksDocRaw.data() : {};
+            const clicksDoc = doesFirestoreDocExists(clicksDocRaw) ? clicksDocRaw.data() : {};
             const currentClicks = getCurrentClicksForProduct(clicksDoc, id);
             clicksDoc[id] = currentClicks + 1;
 
-            const promise1 = db.doc(`${USER_COLLECTION}/${uid}/ML/Clicks`).update({
-                ...clicksDoc,
-            });
+            let updateProductClickCount = Promise.resolve();
+            if (doesFirestoreDocExists(clicksDocRaw)) {
+                updateProductClickCount = db.doc(`${USER_COLLECTION}/${uid}/ML/Clicks`).update({
+                    ...clicksDoc,
+                });
+            } else {
+                updateProductClickCount = db
+                    .collection(USER_COLLECTION)
+                    .doc(uid)
+                    .collection(ML_COLLECTION)
+                    .doc("Clicks")
+                    .set({
+                        ...clicksDoc,
+                    });
+            }
 
-            const promise2 = async () => {
+            const updateLogOfClickCount = async () => {
                 const rawDoc = await db
                     .collection(CLICKS_COLLECTION)
                     .where("user", "==", uid)
@@ -70,7 +87,7 @@ export const ProductDetails = ({ history }) => {
                 }
             };
 
-            await Promise.all([promise1, promise2()]);
+            await Promise.all([updateProductClickCount, updateLogOfClickCount()]);
         };
         updater();
     }, [id, uid]);

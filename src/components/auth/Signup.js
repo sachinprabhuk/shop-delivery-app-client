@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Row, Col, Form, Button, Container } from "react-bootstrap";
 import { app, db } from "../../firebase";
 import * as firebase from "firebase/app";
+import { USER_COLLECTION } from "../../constants/constants";
 
 export const Signup = ({ history }) => {
     const [email, setEmail] = useState("");
@@ -15,43 +16,27 @@ export const Signup = ({ history }) => {
 
     const handleFormSubmit = async (e) => {
         e.preventDefault();
-        if(!newpass)
-        {
+        if (!newpass) {
             setError(e.message || "Different passwords used");
-            return null;
-        }
-        else
-        {
+        } else {
             setLoading(true);
-            try 
-            {
+            try {
                 await firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
-                await app.auth().createUserWithEmailAndPassword(email, password);
-                firebase.auth().onAuthStateChanged(function(user) {
-                    if (user) {
-                        db.collection('Users').doc(user.uid).set({
-                            email: email,
-                            phone: phone,
-                            name: name,
-                            password: password,
-                            address: address
-                        }).catch((error)=> {
-                            setError(error);
-                        });
-                    }
-                  });
-
+                const user = await app.auth().createUserWithEmailAndPassword(email, password);
+                await db.collection(USER_COLLECTION).doc(user.user.uid).set({
+                    email: email,
+                    phone: phone,
+                    name: name,
+                    address: address,
+                });
                 setLoading(false);
-            } 
-            catch (e) 
-            {
+            } catch (e) {
                 setLoading(false);
                 setError(e.message || "Error while signing up!try again in a while");
                 setTimeout(() => {
                     setError(false);
                 }, 12000);
             }
-        
         }
     };
 
@@ -65,7 +50,7 @@ export const Signup = ({ history }) => {
                     <Form onSubmit={handleFormSubmit}>
                         <Form.Group controlId="formBasicName">
                             <Form.Label>Name</Form.Label>
-                            <Form.Control type="text" onInput={(e) => setName(e.target.value)}/>
+                            <Form.Control type="text" onInput={(e) => setName(e.target.value)} />
                         </Form.Group>
                         <Form.Group controlId="formBasicEmail">
                             <Form.Label>Email address</Form.Label>
@@ -73,11 +58,15 @@ export const Signup = ({ history }) => {
                         </Form.Group>
                         <Form.Group controlId="formBasicPhone">
                             <Form.Label>Phone</Form.Label>
-                            <Form.Control type="number" onInput={(e) => setPhone(e.target.value)}/>
+                            <Form.Control type="number" onInput={(e) => setPhone(e.target.value)} />
                         </Form.Group>
                         <Form.Group controlId="formBasicAddress">
                             <Form.Label>Address</Form.Label>
-                            <Form.Control as="textarea" row="3" onInput={(e) => setAddress(e.target.value)}/>
+                            <Form.Control
+                                as="textarea"
+                                row="3"
+                                onInput={(e) => setAddress(e.target.value)}
+                            />
                         </Form.Group>
                         <Form.Group controlId="formBasicPassword">
                             <Form.Label>Password</Form.Label>
@@ -91,12 +80,9 @@ export const Signup = ({ history }) => {
                             <Form.Control
                                 type="password"
                                 onInput={(e) => {
-                                        if(password === e.target.value)
-                                            setNewPassword(true);
-                                        else
-                                            setNewPassword(false);
-                                    }
-                                }
+                                    if (password === e.target.value) setNewPassword(true);
+                                    else setNewPassword(false);
+                                }}
                             />
                         </Form.Group>
 

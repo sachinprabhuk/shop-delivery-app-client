@@ -15,7 +15,7 @@ export const Home = withStdBottomNav(
 
         const fetchRecommendations = useCallback(async () => {
             const rawRecommendationDoc = await db.doc(`${USER_COLLECTION}/${uid}/ML/Items`).get();
-            if(!rawRecommendationDoc || !rawRecommendationDoc.data()) {
+            if (!rawRecommendationDoc || !rawRecommendationDoc.data()) {
                 return [];
             }
             const recommendationDoc = rawRecommendationDoc.data();
@@ -39,17 +39,30 @@ export const Home = withStdBottomNav(
         if (error) {
             toRender = <p>{error}</p>;
         } else if (data) {
-            toRender = (
-                <ul>
-                    {data.map((el) => {
-                        return (
-                            <li key={el.id}>
-                                {el.name} - {el.price}
-                            </li>
-                        );
-                    })}
-                </ul>
-            );
+            if (data.length === 0) {
+                toRender = (
+                    <>
+                        <br />
+                        <br />
+                        <br />
+                        <p style={{ textAlign: "center" }}>
+                            No recommendations. Please start browsing to see recommendations
+                        </p>
+                    </>
+                );
+            } else {
+                toRender = (
+                    <ul>
+                        {data.map((el) => {
+                            return (
+                                <li key={el.id}>
+                                    {el.name} - {el.price}
+                                </li>
+                            );
+                        })}
+                    </ul>
+                );
+            }
         }
 
         return <Container>{toRender}</Container>;
