@@ -128,7 +128,7 @@ export const ShopListModal = ({ show, setShow, selectShop, addingToCart, product
                 <Modal.Header closeButton>
                     <Modal.Title>Select a shop</Modal.Title>
                 </Modal.Header>
-                <Modal.Body style={{ height: "50vh", overflow: "scroll" }}>
+                <Modal.Body style={{ maxHeight: "50vh", overflow: "scroll" }}>
                     {modalBody}
                 </Modal.Body>
                 <Modal.Footer>

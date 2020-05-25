@@ -15,7 +15,7 @@ export const SearchInput = ({ history }) => {
 
     const onSearchSubmit = (e) => {
         e.preventDefault();
-        history.replace(`/search/${type}/${query}`);
+        history.replace(`/search/${type}/${query.toLowerCase()}`);
     };
 
     if (isValidSearchType(type)) {
