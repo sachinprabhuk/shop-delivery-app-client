@@ -44,7 +44,7 @@ export const ProductDetails = ({ history }) => {
     useEffect(() => {
         const updater = async () => {
             const clicksDocRaw = await db.doc(`${USER_COLLECTION}/${uid}/ML/Clicks`).get();
-            const clicksDoc = clicksDocRaw.data() || {};
+            const clicksDoc = clicksDocRaw && clicksDocRaw.data() ? clicksDocRaw.data() : {};
             const currentClicks = getCurrentClicksForProduct(clicksDoc, id);
             clicksDoc[id] = currentClicks + 1;
 
@@ -139,7 +139,7 @@ export const ProductDetails = ({ history }) => {
         <>
             <DetailPageTopbar
                 searchClicked={() => {
-                    history.push("/search?type=products");
+                    history.push("/search/products");
                 }}
             />
             {toRender}

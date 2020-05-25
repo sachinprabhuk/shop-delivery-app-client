@@ -14,7 +14,7 @@ export const SearchPage = withStdTopNav(
                     <Card.Footer>
                         <Card.Link
                             as={NavLink}
-                            to="/search?type=products"
+                            to="/search/products"
                             className="d-flex justify-content-between"
                         >
                             <span>Search products</span>
@@ -28,7 +28,7 @@ export const SearchPage = withStdTopNav(
                     <Card.Footer>
                         <Card.Link
                             as={NavLink}
-                            to="/search?type=shops"
+                            to="/search/shops"
                             className="d-flex justify-content-between"
                         >
                             <span>Search shops</span>

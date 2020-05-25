@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { SearchResTopNav } from "../../navigations/SearchResTopNav";
 import { Loader } from "../../utils/Loader";
-import { withRouter } from "react-router";
+import { useParams } from "react-router";
 import { db } from "../../../firebase";
 import {
     SEARCH_TYPE_PRODUCT,
@@ -11,19 +11,16 @@ import {
 import { ProductCard } from "./resultCards/ProductCard";
 import { ShopCard } from "./resultCards/ShopCard";
 
-export const SearchResultPage = withRouter(({ location, onSearchClick, onBackClicked }) => {
+export const SearchResultPage = ({ location, history }) => {
     const [fetching, setFetching] = useState(true);
     const [results, setResults] = useState(null);
     const [resultType, setResultType] = useState(null);
     const [fetchError, setFetchError] = useState(null);
 
+    const { type: searchType, query } = useParams();
+
     useEffect(() => {
         const fetchOperation = async () => {
-            // query here using query & searchType
-            const searchParams = new URLSearchParams(location.search);
-            const searchType = searchParams.get("type");
-            const query = searchParams.get("query");
-
             try {
                 const endQuery =
                     query.slice(0, query.length - 1) +
@@ -57,7 +54,15 @@ export const SearchResultPage = withRouter(({ location, onSearchClick, onBackCli
             }
         };
         fetchOperation();
-    }, [location.search]);
+    }, [query, searchType]);
+
+    const searchClicked = useCallback(() => {
+        history.push(`/search/${searchType}`);
+    }, [searchType, history]);
+
+    const backClicked = useCallback(() => {
+        history.goBack();
+    }, [history]);
 
     let toRender = <Loader fullPage />;
 
@@ -65,7 +70,7 @@ export const SearchResultPage = withRouter(({ location, onSearchClick, onBackCli
         if (fetchError) {
             toRender = (
                 <>
-                    <SearchResTopNav searchClicked={onSearchClick} backClicked={onBackClicked} />
+                    <SearchResTopNav searchClicked={searchClicked} backClicked={backClicked} />
                     <br />
                     <br />
                     <p className="text-center">{fetchError}</p>
@@ -76,7 +81,7 @@ export const SearchResultPage = withRouter(({ location, onSearchClick, onBackCli
             const data = results.map((data) => <CardComponent key={data.id} {...data} />);
             toRender = (
                 <>
-                    <SearchResTopNav searchClicked={onSearchClick} backClicked={onBackClicked} />
+                    <SearchResTopNav searchClicked={searchClicked} backClicked={backClicked} />
                     {data}
                 </>
             );
@@ -84,4 +89,4 @@ export const SearchResultPage = withRouter(({ location, onSearchClick, onBackCli
     }
 
     return toRender;
-});
+};

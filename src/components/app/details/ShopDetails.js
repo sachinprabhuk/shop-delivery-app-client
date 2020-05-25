@@ -92,7 +92,7 @@ export const ShopDetails = ({ history }) => {
         <>
             <DetailPageTopbar
                 searchClicked={() => {
-                    history.push("/search?type=shops");
+                    history.push("/search/shops");
                 }}
             />
             <Container>

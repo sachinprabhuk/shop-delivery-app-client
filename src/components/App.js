@@ -4,10 +4,11 @@ import { Cart } from "./app/Cart";
 import { Home } from "./app/Home";
 import { Map as GeoMap } from "./app/map/Map";
 import { Profile } from "./app/Profile";
-import { SearchMain } from "./app/search/SearchMain";
 import { SearchPage } from "./app/SearchPage";
 import { ShopDetails } from "./app/details/ShopDetails";
 import { ProductDetails } from "./app/details/ProductDetails";
+import { SearchInput } from "./app/search/SearchInput";
+import { SearchResultPage } from "./app/search/SearchResultPage";
 
 export const App = () => {
     return (
@@ -20,7 +21,8 @@ export const App = () => {
             />
             <Route exact path="/" component={Home} />
             <Route exact path="/profile" component={Profile} />
-            <Route exact path="/search" component={SearchMain} />
+            <Route exact path="/search/:type/:query" component={SearchResultPage} />
+            <Route exact path="/search/:type" component={SearchInput} />
             <Route exact path="/searchpage" component={SearchPage} />
             <Route exact path="/details/shop/:id" component={ShopDetails} />
             <Route exact path="/details/product/:id" component={ProductDetails} />

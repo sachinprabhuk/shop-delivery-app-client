@@ -15,6 +15,9 @@ export const Home = withStdBottomNav(
 
         const fetchRecommendations = useCallback(async () => {
             const rawRecommendationDoc = await db.doc(`${USER_COLLECTION}/${uid}/ML/Items`).get();
+            if(!rawRecommendationDoc || !rawRecommendationDoc.data()) {
+                return [];
+            }
             const recommendationDoc = rawRecommendationDoc.data();
             const sortedData = Object.entries(recommendationDoc).sort((a, b) => b[1] - a[1]);
             const recommendationPromises = sortedData.map(([itemID]) => {
