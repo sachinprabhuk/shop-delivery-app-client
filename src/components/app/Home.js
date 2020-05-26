@@ -37,14 +37,14 @@ export const Home = withStdBottomNav(
 
         useEffect(() => {
             if (localStorage.getItem(PRODUCT_VIEWED) !== null) {
+                const options = {
+                    method: "post",
+                    body: JSON.stringify({ id: uid }),
+                    headers: new Headers({ "content-type": "application/json" }),
+                };
                 fetch(
                     "https://us-central1-shopdeliverymanagement.cloudfunctions.net/doMachineLearning",
-                    {
-                        method: "post",
-                        body: JSON.stringify({
-                            id: uid,
-                        }),
-                    }
+                    options
                 );
                 localStorage.removeItem(PRODUCT_VIEWED);
             }
