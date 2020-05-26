@@ -14,9 +14,14 @@ export const CART_COLLECTION = "CartList";
 export const CLICKS_COLLECTION = "Clicks";
 export const USER_COLLECTION = "Users";
 export const ML_COLLECTION = "ML";
+export const ORDERS_COLLECTIONS = "OrderList";
 
 export const MAXIMUM_DELIVERY_DISTANCE_MILES = 124; // 200km in miles
 
 export const SUCCESS_FETCH = "SUCCESS_FETCH";
 export const FAILURE_FETCH = "FAILURE_FETCH";
 export const START_FETCH = "START_FETCH";
+
+// this is a localstorage key, to see if user has checked out any product since last home page visit.
+// if he has not viewed we wont make a call to ML.
+export const PRODUCT_VIEWED = "PRODUCT_VIEWED";

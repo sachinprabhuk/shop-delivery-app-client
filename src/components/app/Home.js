@@ -1,9 +1,9 @@
-import React, { useContext, useCallback } from "react";
+import React, { useContext, useCallback, useEffect } from "react";
 import { Container } from "react-bootstrap";
 import { withStdTopNav, withStdBottomNav } from "../HOC/NavHOC";
 import { AuthContext } from "../../contexts/AuthContext";
 import { useAsync } from "../../hooks/useAsync";
-import { USER_COLLECTION, ITEMS_COLLECTION } from "../../constants/constants";
+import { USER_COLLECTION, ITEMS_COLLECTION, PRODUCT_VIEWED } from "../../constants/constants";
 import { db } from "../../firebase";
 import { Loader } from "../utils/Loader";
 
@@ -34,6 +34,21 @@ export const Home = withStdBottomNav(
         }, [uid]);
 
         const { data, error } = useAsync(fetchRecommendations);
+
+        useEffect(() => {
+            if (localStorage.getItem(PRODUCT_VIEWED) !== null) {
+                fetch(
+                    "https://us-central1-shopdeliverymanagement.cloudfunctions.net/doMachineLearning",
+                    {
+                        method: "post",
+                        body: JSON.stringify({
+                            id: uid,
+                        }),
+                    }
+                );
+                localStorage.removeItem(PRODUCT_VIEWED);
+            }
+        }, [uid]);
 
         let toRender = <Loader fullPage message="loading recommendations..." />;
         if (error) {

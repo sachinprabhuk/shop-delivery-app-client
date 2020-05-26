@@ -9,6 +9,7 @@ import {
     CLICKS_COLLECTION,
     USER_COLLECTION,
     ML_COLLECTION,
+    PRODUCT_VIEWED,
 } from "../../../constants/constants";
 import { Loader } from "../../utils/Loader";
 import { DetailPageTopbar } from "../../navigations/DetailPageTopbar";
@@ -48,6 +49,8 @@ export const ProductDetails = ({ history }) => {
 
     useEffect(() => {
         const updater = async () => {
+            localStorage.setItem(PRODUCT_VIEWED, "true");
+
             const clicksDocRaw = await db.doc(`${USER_COLLECTION}/${uid}/ML/Clicks`).get();
             const clicksDoc = doesFirestoreDocExists(clicksDocRaw) ? clicksDocRaw.data() : {};
             const currentClicks = getCurrentClicksForProduct(clicksDoc, id);

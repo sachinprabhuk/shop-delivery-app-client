@@ -1,6 +1,6 @@
 import React from "react";
 import { Route, Switch, Redirect } from "react-router";
-import { Cart } from "./app/Cart";
+import { Cart } from "./app/cart/Cart";
 import { Home } from "./app/Home";
 import { Map as GeoMap } from "./app/map/Map";
 import { Profile } from "./app/Profile";
