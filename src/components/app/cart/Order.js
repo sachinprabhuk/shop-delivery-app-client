@@ -8,15 +8,19 @@ import { Row, Col, Button, Container } from "react-bootstrap";
 export const Order = ({ cartItems }) => {
     return (
         <Container>
+            <br />
             <Row>
                 <Col>
-                    {cartItems.reduce((acc, curr) => acc + Number.parseFloat(curr.price), 0)} Rs.
+                    Grand Total : ₹ {cartItems.reduce((acc, curr) => acc + Number.parseFloat(curr.price), 0)}
                 </Col>
 
                 <Col>
-                    <Button variant="warning">Place order</Button>
+                    <Button className="float-right" variant="warning">Place order</Button>
                 </Col>
             </Row>
+            <br />
+            <br />
+            <br />
         </Container>
     );
 };
