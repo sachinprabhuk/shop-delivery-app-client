@@ -73,7 +73,7 @@ export const Profile = withStdBottomNav(
                         <span className="text-center">{name}</span>
                         <br />
                         <div className="text-center">
-                            <Button className="d-inline" variant="primary">
+                            <Button className="d-inline" variant="light">
                                 <EditOutlinedIcon /> Edit
                             </Button>
                         </div>
@@ -112,8 +112,8 @@ export const Profile = withStdBottomNav(
                             </span>
                         </Card>
 
-                        <Button variant="primary" onClick={() => history.push("/orders")}>
-                            my orders
+                        <Button variant="light" onClick={() => history.push("/orders")}>
+                            My Orders
                         </Button>
                         <br />
                         <Button variant="danger" onClick={handleClick}>

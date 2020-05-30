@@ -79,7 +79,6 @@ export const Home = withStdBottomNav(
                 localStorage.removeItem(PRODUCT_VIEWED);
             }
         }, [uid]);
-
         let toRender = <Loader fullPage message="loading recommendations..." />;
         if (error) {
             toRender = <p>{error}</p>;
@@ -128,7 +127,7 @@ export const Home = withStdBottomNav(
                                                     color="textSecondary"
                                                     component="p"
                                                 >
-                                                    {el.details} <br />
+                                                    {(el.details.length > 50) ? el.details.substring(0, 50).concat("...") : el.details } <br />
                                                 </Typography>
                                             </CardContent>
                                         </div>

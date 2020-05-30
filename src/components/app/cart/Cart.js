@@ -1,5 +1,5 @@
 import React, { useContext, useCallback } from "react";
-import { Container } from "react-bootstrap";
+import { Container, Image } from "react-bootstrap";
 import { withGoBackTopNav } from "../../HOC/NavHOC";
 import { useAsync } from "../../../hooks/useAsync";
 import { db } from "../../../firebase";
@@ -89,7 +89,9 @@ export const Cart = withGoBackTopNav(({ history }) => {
                 </>
             );
         } else {
-            toRender = <p>No cart items</p>;
+            toRender =  <div style={{ marginTop:"50%"}}>
+                <Image style={{ padding:"20px"}} src={"../../images/emptycart.png"} width="100%" alt="Error" />
+                    </div>;
         }
     }
 

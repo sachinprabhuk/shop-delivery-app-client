@@ -1,5 +1,5 @@
 import React, { useState, useContext, useCallback, useEffect } from "react";
-import { Container, Button } from "react-bootstrap";
+import { Container, Button, Card } from "react-bootstrap";
 import { Image } from "react-bootstrap";
 import { firstLetterToUpperCase } from "../../../utils/utils";
 import { useParams } from "react-router";
@@ -134,22 +134,28 @@ export const ProductDetails = ({ history }) => {
         } else {
             toRender = (
                 <Container>
-                    <div>
+                    <div >
                         <br />
-                        <h3>{firstLetterToUpperCase(product.name)}</h3>
+                        <h4>{firstLetterToUpperCase(product.name)}</h4>
                         <div>
-                            <Image src={product.image} width="100%" alt="Error" />
+                            <Image style={{ padding:"20px"}} src={product.image} width="100%" alt="Error" />
                         </div>
-                        <div>
+                        <Card
+                            style={{
+                                marginBottom: "20px",
+                                padding: "3%",
+                            }}
+                        >
                             <p className="font-weight-bold">
-                                From {product.place} | {product.company}
+                                From {product.origin} | {product.company}
                             </p>
                             <p className="font-weight-bold">
-                                Rs. {product.price} per {product.unit}
+                            ₹{" "}{product.price}{" "}/{" "}{product.unit}{" "}
                             </p>
-                            <Button onClick={() => setShowModal(true)}>Add to Cart</Button>
-                            <p>{product.details}</p>
-                        </div>
+                            
+                            <p >{product.details}</p>
+                        </Card>
+                        <Button style={{width:"100%"}} onClick={() => setShowModal(true)}>Add to Cart</Button>
                     </div>
                 </Container>
             );
