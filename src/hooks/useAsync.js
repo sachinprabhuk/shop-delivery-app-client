@@ -1,6 +1,8 @@
 import { useEffect, useReducer, useCallback } from "react";
 import { START_FETCH, FAILURE_FETCH, SUCCESS_FETCH } from "../constants/constants";
 
+const UPDATE_DATA = "UPDATE_DATA";
+
 const reducer = (state, action) => {
     switch (action.type) {
         case START_FETCH:
@@ -9,6 +11,8 @@ const reducer = (state, action) => {
             return { ...state, data: action.payload, error: null, fetching: false, started: false };
         case FAILURE_FETCH:
             return { ...state, data: null, error: action.payload, fetching: false, started: false };
+        case UPDATE_DATA:
+            return { ...state, data: action.payload };
         default:
             throw new Error("Invalid action type");
     }
@@ -34,11 +38,18 @@ export const useAsync = (cb, fetchImmediate = true) => {
         }
     }, [cb]);
 
+    const updateData = useCallback(
+        (data) => {
+            dispatch({ type: UPDATE_DATA, payload: data });
+        },
+        [dispatch]
+    );
+
     useEffect(() => {
         if (fetchImmediate) {
             fetchFn();
         }
     }, [cb, fetchFn, fetchImmediate]);
 
-    return { fetching, error, data, fetchFn, started };
+    return { fetching, error, data, fetchFn, started, updateData };
 };
