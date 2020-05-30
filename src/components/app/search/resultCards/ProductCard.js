@@ -15,7 +15,10 @@ export const ProductCard = ({ name, image, price, details, id, unit }) => {
                 </Col>
                 <Col xs={4}>
                     <h5>{firstLetterToUpperCase(name)}</h5>
-                    <span>{details}</span>
+                    <span>
+                        {details &&
+                            (details.length > 30 ? `${details.substring(0, 30)}...` : details)}
+                    </span>
                 </Col>
                 <Col xs={4} className="text-right" style={{ padding: "0px" }}>
                     <p className="font-weight-bold">

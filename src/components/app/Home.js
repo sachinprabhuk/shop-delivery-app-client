@@ -102,9 +102,6 @@ export const Home = withStdBottomNav(
 
                         {data.map((el) => {
                             return (
-                                // <li key={el.id}>
-                                //     {el.name} - {el.price}
-                                // </li>
                                 <Card
                                     className={classes.root}
                                     key={el.id}
@@ -127,7 +124,10 @@ export const Home = withStdBottomNav(
                                                     color="textSecondary"
                                                     component="p"
                                                 >
-                                                    {(el.details.length > 50) ? el.details.substring(0, 50).concat("...") : el.details } <br />
+                                                    {el.details.length > 30
+                                                        ? el.details.substring(0, 30).concat("...")
+                                                        : el.details}{" "}
+                                                    <br />
                                                 </Typography>
                                             </CardContent>
                                         </div>

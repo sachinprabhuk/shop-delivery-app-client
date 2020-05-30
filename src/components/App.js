@@ -9,7 +9,7 @@ import { ShopDetails } from "./app/details/ShopDetails";
 import { ProductDetails } from "./app/details/ProductDetails";
 import { SearchInput } from "./app/search/SearchInput";
 import { SearchResultPage } from "./app/search/SearchResultPage";
-import { MyOrders } from "./app/myorders/MyOrders";
+import { MyOrders } from "./app/MyOrders";
 
 export const App = () => {
     return (

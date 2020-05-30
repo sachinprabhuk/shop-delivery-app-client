@@ -132,13 +132,19 @@ export const ProductDetails = ({ history }) => {
                 </>
             );
         } else {
+            console.log(product);
             toRender = (
                 <Container>
-                    <div >
+                    <div>
                         <br />
                         <h4>{firstLetterToUpperCase(product.name)}</h4>
                         <div>
-                            <Image style={{ padding:"20px"}} src={product.image} width="100%" alt="Error" />
+                            <Image
+                                style={{ padding: "20px" }}
+                                src={product.image}
+                                width="100%"
+                                alt="Error"
+                            />
                         </div>
                         <Card
                             style={{
@@ -150,12 +156,14 @@ export const ProductDetails = ({ history }) => {
                                 From {product.origin} | {product.company}
                             </p>
                             <p className="font-weight-bold">
-                            ₹{" "}{product.price}{" "}/{" "}{product.unit}{" "}
+                                ₹ {product.price} / {product.unit}{" "}
                             </p>
-                            
-                            <p >{product.details}</p>
+
+                            <p>{product.details}</p>
                         </Card>
-                        <Button style={{width:"100%"}} onClick={() => setShowModal(true)}>Add to Cart</Button>
+                        <Button style={{ width: "100%" }} onClick={() => setShowModal(true)}>
+                            Add to Cart
+                        </Button>
                     </div>
                 </Container>
             );

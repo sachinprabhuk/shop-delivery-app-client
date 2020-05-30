@@ -1,5 +1,5 @@
 import React from "react";
-import { Navbar, Nav } from "react-bootstrap";
+import { Navbar, Nav, Image } from "react-bootstrap";
 import { NavLink, Link } from "react-router-dom";
 import { MyLocation, ShoppingCartOutlined } from "@material-ui/icons";
 
@@ -7,7 +7,7 @@ export const TopBar = () => {
     return (
         <Navbar bg="primary" variant="dark" className="justify-content-between">
             <Navbar.Brand as={Link} to="/">
-                Logo
+                <Image src="/images/logo.png" width="60px" />
             </Navbar.Brand>
             <Nav>
                 <Nav.Link as={NavLink} to="/cart">

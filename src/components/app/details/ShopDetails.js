@@ -12,7 +12,7 @@ import { db } from "../../../firebase";
 import MailOutlineIcon from "@material-ui/icons/MailOutline";
 import PhoneAndroidIcon from "@material-ui/icons/PhoneAndroid";
 import RoomOutlinedIcon from "@material-ui/icons/RoomOutlined";
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from "@material-ui/core/styles";
 import Card1 from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import CardContent from "@material-ui/core/CardContent";
@@ -75,7 +75,12 @@ export const ShopDetails = ({ history }) => {
                     <br />
                     <h4>{firstLetterToUpperCase(shop.name)}</h4>
                     <span>
-                        <Image style={{ padding:"20px"}} src={shop.image} width="100%" alt="Error" />
+                        <Image
+                            style={{ padding: "20px" }}
+                            src={shop.image}
+                            width="100%"
+                            alt="Error"
+                        />
                     </span>
                     <div>
                         <p></p>
@@ -99,9 +104,8 @@ export const ShopDetails = ({ history }) => {
                                 <RoomOutlinedIcon />
                                 <span style={{ marginLeft: "10px" }}>{shop.address}</span>
                             </span>
-                            
                         </Card>
-                        
+
                         <p className="font-weight-bold">
                             {shop.delivery ? "We Offer Delivery!" : "We don't Offer Delivery yet"}
                         </p>
@@ -132,35 +136,33 @@ export const ShopDetails = ({ history }) => {
                 ownedProductView = itemList.map((el) => {
                     return (
                         <Card1
-                        className={classes.root}
-                        key={el.id}
-                        onClick={() => history.push(`/details/product/${el.id}`)}
-                    >
-                        <CardActionArea>
-                            <div className={classes.details}>
-                                <CardContent className={classes.content}>
-                                    <h5>{el.name}</h5>
-                                    <Typography
-                                        variant="body1"
-                                        color="textSecondary"
-                                        component="p"
-                                    >
-                                         ₹ {el.price} <br />
-                                         Qty: {el.qty}
-                                    </Typography>
-                                </CardContent>
+                            className={classes.root}
+                            key={el.id}
+                            onClick={() => history.push(`/details/product/${el.itemID}`)}
+                        >
+                            <CardActionArea>
+                                <div className={classes.details}>
+                                    <CardContent className={classes.content}>
+                                        <h5>{el.name}</h5>
+                                        <Typography
+                                            variant="body1"
+                                            color="textSecondary"
+                                            component="p"
+                                        >
+                                            ₹ {el.price}/{el.unit} <br />
+                                        </Typography>
+                                    </CardContent>
+                                </div>
+                            </CardActionArea>
+                            <div style={{ textAlign: "center" }}>
+                                <CardMedia
+                                    className={classes.cover}
+                                    image={el.image}
+                                    component="img"
+                                    title={el.name}
+                                />
                             </div>
-                        </CardActionArea>
-                        <div style={{ textAlign: "center" }}>
-                            <CardMedia
-                                className={classes.cover}
-                                image={el.image}
-                                component="img"
-                                title={el.name}
-                            />
-                        </div>
-                    </Card1>
-                        
+                        </Card1>
                     );
                 });
             }

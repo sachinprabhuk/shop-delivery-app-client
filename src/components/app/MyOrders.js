@@ -1,10 +1,10 @@
 import React, { useCallback, useContext } from "react";
-import { AuthContext } from "../../../contexts/AuthContext";
-import { db } from "../../../firebase";
-import { ORDERS_COLLECTIONS } from "../../../constants/constants";
-import { useAsync } from "../../../hooks/useAsync";
-import { Loader } from "../../utils/Loader";
-import { withGoBackTopNav } from "../../HOC/NavHOC";
+import { AuthContext } from "../../contexts/AuthContext";
+import { db } from "../../firebase";
+import { ORDERS_COLLECTIONS } from "../../constants/constants";
+import { useAsync } from "../../hooks/useAsync";
+import { Loader } from "../utils/Loader";
+import { withGoBackTopNav } from "../HOC/NavHOC";
 import { Container } from "react-bootstrap";
 
 import {
@@ -15,7 +15,6 @@ import {
     Card,
     CardMedia,
 } from "@material-ui/core";
-import { Button } from "react-bootstrap";
 
 const useStyles = makeStyles({
     main: {
@@ -70,28 +69,20 @@ export const MyOrders = withGoBackTopNav(({ history }) => {
     }
     return (
         <Container>
-        <br />
+            <br />
             {data.map((el) => {
                 return (
-                    // <div
-                    //     key={el.id}
-                    //     onClick={() => history.push(`/details/product/${el.product.id}`)}
-                    // >
-                    //     <p>
-                    //         {el.product.name} - {el.shop.name} - {el.price}
-                    //     </p>
-                    // </div>
-                    <Card className={classes.main}>
-            <div
-                className={classes.root}
-                onClick={() => history.push(`/details/product/${el.product.id}`)}
-            >
-                <CardMedia className={classes.cover} image={el.product.image} />
+                    <Card className={classes.main} key={el.id}>
+                        <div
+                            className={classes.root}
+                            onClick={() => history.push(`/details/product/${el.product.id}`)}
+                        >
+                            <CardMedia className={classes.cover} image={el.product.image} />
 
-                <CardActions>
-                    <div className={classes.details}>
-                        <CardContent className={classes.content}>
-                            {/* <div className="float-right d-flex">
+                            <CardActions>
+                                <div className={classes.details}>
+                                    <CardContent className={classes.content}>
+                                        {/* <div className="float-right d-flex">
                                 <Button
                                     style={{
                                         border: "none",
@@ -121,31 +112,35 @@ export const MyOrders = withGoBackTopNav(({ history }) => {
                                     +
                                 </Button>
                             </div> */}
-                            <h5>
-                                {el.product.name}
-                                {"   "}
-                                <span
-                                    className="text-secondary text-decoration-none font-weight-light"
-                                    style={{ fontSize: "14px" }}
-                                >
-                                    ({el.quantity})
-                                </span>
-                            </h5>
+                                        <h5>
+                                            {el.product.name}
+                                            {"   "}
+                                            <span
+                                                className="text-secondary text-decoration-none font-weight-light"
+                                                style={{ fontSize: "14px" }}
+                                            >
+                                                ({el.quantity})
+                                            </span>
+                                        </h5>
 
-                            <Typography variant="body1" color="textSecondary" component="p">
-                                Price : ₹{el.price} <br />
-                                {el.shop.name}
-                            </Typography>
-                        </CardContent>
-                    </div>
-                </CardActions>
-                <br />
-            </div>
-        </Card>
+                                        <Typography
+                                            variant="body1"
+                                            color="textSecondary"
+                                            component="p"
+                                        >
+                                            Price : ₹{el.price} <br />
+                                            {el.shop.name}
+                                        </Typography>
+                                    </CardContent>
+                                </div>
+                            </CardActions>
+                            <br />
+                        </div>
+                    </Card>
                 );
             })}
-        <br />
-        <br />
+            <br />
+            <br />
         </Container>
     );
 });
