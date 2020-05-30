@@ -11,7 +11,7 @@ import * as firebase from "firebase/app";
 import RoomOutlinedIcon from "@material-ui/icons/RoomOutlined";
 
 export const Profile = withStdBottomNav(
-    withStdTopNav(() => {
+    withStdTopNav(({ history }) => {
         const [name, setName] = useState("-");
         const [phone, setPhone] = useState("-");
         const [address, setAddress] = useState("-");
@@ -112,6 +112,10 @@ export const Profile = withStdBottomNav(
                             </span>
                         </Card>
 
+                        <Button variant="primary" onClick={() => history.push("/orders")}>
+                            my orders
+                        </Button>
+                        <br />
                         <Button variant="danger" onClick={handleClick}>
                             Logout
                         </Button>

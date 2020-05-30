@@ -9,6 +9,7 @@ import { ShopDetails } from "./app/details/ShopDetails";
 import { ProductDetails } from "./app/details/ProductDetails";
 import { SearchInput } from "./app/search/SearchInput";
 import { SearchResultPage } from "./app/search/SearchResultPage";
+import { MyOrders } from "./app/myorders/MyOrders";
 
 export const App = () => {
     return (
@@ -26,6 +27,11 @@ export const App = () => {
             <Route exact path="/searchpage" component={SearchPage} />
             <Route exact path="/details/shop/:id" component={ShopDetails} />
             <Route exact path="/details/product/:id" component={ProductDetails} />
+            <Route
+                exact
+                path="/orders"
+                component={(props) => <MyOrders title="Your orders" {...props} />}
+            />
             <Route exact path="/404" render={() => <h1>404 :(</h1>} />
             <Redirect to="/" />
         </Switch>

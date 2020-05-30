@@ -1,7 +1,7 @@
 import React from "react";
 import { Row, Button, Container } from "react-bootstrap";
 
-export const Order = ({ cartItems }) => {
+export const Order = ({ cartItems, orderClicked }) => {
     return (
         <Container>
             <Row className="justify-content-between my-3 align-items-center">
@@ -16,7 +16,7 @@ export const Order = ({ cartItems }) => {
                         )}
                     </span>
                 </span>
-                <Button className="float-right" variant="warning">
+                <Button className="float-right" variant="warning" onClick={orderClicked}>
                     Place order
                 </Button>
             </Row>

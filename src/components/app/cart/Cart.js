@@ -4,7 +4,7 @@ import { withGoBackTopNav } from "../../HOC/NavHOC";
 import { useAsync } from "../../../hooks/useAsync";
 import { db } from "../../../firebase";
 import { AuthContext } from "../../../contexts/AuthContext";
-import { CART_COLLECTION } from "../../../constants/constants";
+import { CART_COLLECTION, ORDERS_COLLECTIONS } from "../../../constants/constants";
 import { Loader } from "../../utils/Loader";
 import { Order } from "./Order";
 import { CartCard } from "./CartCard";
@@ -44,6 +44,32 @@ export const Cart = withGoBackTopNav(({ history }) => {
         [data, updateData]
     );
 
+    const orderAllCartItems = async () => {
+        const result = await Promise.allSettled(
+            data.map(async ({ id, ...cartItem }) => {
+                try {
+                    const newOrdertItemRef = db.collection(ORDERS_COLLECTIONS).doc();
+                    const cartItemRef = db.collection(CART_COLLECTION).doc(id);
+                    db.runTransaction(async (transaction) => {
+                        await transaction.set(newOrdertItemRef, cartItem);
+                        await transaction.delete(cartItemRef);
+                    });
+                } catch (e) {
+                    throw new Error(id);
+                }
+            })
+        );
+        const rejectedIDs = result
+            .filter((el) => el.status !== "fulfilled")
+            .map((el) => el.reason.message);
+        const rejectIdsSet = new Set(rejectedIDs);
+        console.log("reject ids -> ", rejectIdsSet);
+        updateData(data.filter((el) => rejectIdsSet.has(el.id)));
+        if (rejectIdsSet.size > 0) {
+            alert("Some items were not ordered!! please try again later");
+        }
+    };
+
     let toRender = <Loader fullPage message="fetching cart items..." />;
     if (error) {
         toRender = <p>{error}</p>;
@@ -51,7 +77,7 @@ export const Cart = withGoBackTopNav(({ history }) => {
         if (data && data.length > 0) {
             toRender = (
                 <>
-                    <Order cartItems={data} />
+                    <Order cartItems={data} orderClicked={orderAllCartItems} />
                     {data.map((el) => (
                         <CartCard
                             cartItem={el}
