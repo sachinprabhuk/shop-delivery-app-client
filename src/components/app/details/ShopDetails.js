@@ -10,8 +10,40 @@ import { useFetchFirestoreDoc } from "../../../hooks/useFetchFirestoreDoc";
 import { useAsync } from "../../../hooks/useAsync";
 import { db } from "../../../firebase";
 
+import { makeStyles } from '@material-ui/core/styles';
+import Card from '@material-ui/core/Card';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
+import Typography from '@material-ui/core/Typography';
+import { FormatAlignCenter } from "@material-ui/icons";
+
+const useStyles = makeStyles({
+    root: {
+      display: 'flex',
+      marginBottom: "40px",
+      borderRadius:"0px",
+      boxShadow:"0px 2px 9px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12)"
+    },
+    details: {
+      display: 'flex',
+      flexDirection: 'column',
+    },
+    content: {
+      flex: '1 0 auto',
+    },
+    cover: {
+    margin:20,
+      width: 82,
+      height:80
+    
+    },
+  });
+
+
 export const ShopDetails = ({ history }) => {
     const { id } = useParams();
+    const classes = useStyles();
     const [fetching, error, shop] = useFetchFirestoreDoc(`${SHOPS_COLLECTION}/${id}`);
     const [viewProdsClicked, setViewProdsClicked] = useState(false);
 
@@ -79,9 +111,28 @@ export const ShopDetails = ({ history }) => {
             } else {
                 ownedProductView = itemList.map((el) => {
                     return (
-                        <p key={el.id}>
-                            {el.name} - {el.price}
-                        </p>
+                        <Card className={classes.root} key={el.id}>
+                                
+                                
+                                <CardActionArea>
+                                <div className={classes.details}>
+                                    <CardContent className={classes.content}>
+                                    <h5>{el.name}</h5>
+                                    <CardMedia
+                                    className={classes.cover}
+                                    image={el.image}
+                                    component="img"
+                                    title="Live from space album cover"
+                                />
+                                    <h5 style={{fontSize:"17px"}}> Price : ₹ {el.price} </h5>
+                                    </CardContent>
+                                </div>
+                                </CardActionArea> 
+                            </Card>
+
+                        // <p key={el.id}>
+                        //     {el.name} - {el.price}
+                        // </p>
                     );
                 });
             }
