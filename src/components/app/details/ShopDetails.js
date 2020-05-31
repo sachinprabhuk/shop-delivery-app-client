@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Container, Button, Card } from "react-bootstrap";
-import { Image } from "react-bootstrap";
 import { firstLetterToUpperCase } from "../../../utils/utils";
 import { useParams } from "react-router";
 import { SHOPS_COLLECTION, ITEMS_COLLECTION } from "../../../constants/constants";
@@ -18,6 +17,7 @@ import CardActionArea from "@material-ui/core/CardActionArea";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
+import { StorageImage } from "../../utils/StorageImage";
 
 const useStyles = makeStyles({
     root: {
@@ -75,7 +75,7 @@ export const ShopDetails = ({ history }) => {
                     <br />
                     <h4>{firstLetterToUpperCase(shop.name)}</h4>
                     <span>
-                        <Image
+                        <StorageImage
                             style={{ padding: "20px" }}
                             src={shop.image}
                             width="100%"

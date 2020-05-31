@@ -1,20 +1,14 @@
 import React, { useCallback, useContext } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
 import { db } from "../../firebase";
-import { ORDERS_COLLECTIONS } from "../../constants/constants";
+import { ORDERS_COLLECTIONS, THUMBNAIL_SIZE } from "../../constants/constants";
 import { useAsync } from "../../hooks/useAsync";
 import { Loader } from "../utils/Loader";
 import { withGoBackTopNav } from "../HOC/NavHOC";
 import { Container } from "react-bootstrap";
 
-import {
-    CardActions,
-    CardContent,
-    Typography,
-    makeStyles,
-    Card,
-    CardMedia,
-} from "@material-ui/core";
+import { CardActions, CardContent, Typography, makeStyles, Card } from "@material-ui/core";
+import { Thumbnail } from "../utils/Thumbnail";
 
 const useStyles = makeStyles({
     main: {
@@ -25,6 +19,8 @@ const useStyles = makeStyles({
     root: {
         display: "flex",
         borderRadius: "0px",
+        alignItems: "center",
+        margin: "0px",
     },
     details: {
         display: "flex",
@@ -32,10 +28,11 @@ const useStyles = makeStyles({
     },
     content: {
         flex: "1 0 auto",
+        padding: "0px",
     },
     cover: {
-        minWidth: 111,
-        maxWidth: 111,
+        width: THUMBNAIL_SIZE,
+        height: THUMBNAIL_SIZE,
         margin: "10px",
     },
 });
@@ -77,41 +74,17 @@ export const MyOrders = withGoBackTopNav(({ history }) => {
                             className={classes.root}
                             onClick={() => history.push(`/details/product/${el.product.id}`)}
                         >
-                            <CardMedia className={classes.cover} image={el.product.image} />
+                            <div className={classes.cover}>
+                                <Thumbnail
+                                    src={el.product.image}
+                                    alt="error"
+                                    className="w-100 h-100 object-fit-cover"
+                                />
+                            </div>
 
                             <CardActions>
                                 <div className={classes.details}>
-                                    <CardContent className={classes.content}>
-                                        {/* <div className="float-right d-flex">
-                                <Button
-                                    style={{
-                                        border: "none",
-                                        marginLeft: "3px",
-                                    }}
-                                    variant="light"
-                                >
-                                    -
-                                </Button>
-
-                                <label
-                                    style={{
-                                        width: "30px",
-                                        textAlign: "center",
-                                        marginTop: "4px",
-                                    }}
-                                >
-                                    {cartItem.quantity}
-                                </label>
-                                <Button
-                                    style={{
-                                        border: "none",
-                                        marginRight: "3px",
-                                    }}
-                                    variant="light"
-                                >
-                                    +
-                                </Button>
-                            </div> */}
+                                    <CardContent className={`${classes.content} my-0 py-2`}>
                                         <h5>
                                             {el.product.name}
                                             {"   "}

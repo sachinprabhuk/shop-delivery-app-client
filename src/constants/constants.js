@@ -25,3 +25,5 @@ export const START_FETCH = "START_FETCH";
 // this is a localstorage key, to see if user has checked out any product since last home page visit.
 // if he has not viewed we wont make a call to ML.
 export const PRODUCT_VIEWED = "PRODUCT_VIEWED";
+
+export const THUMBNAIL_SIZE = 80;

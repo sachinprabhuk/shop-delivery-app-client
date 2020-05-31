@@ -1,6 +1,5 @@
 import React, { useState, useContext, useCallback, useEffect } from "react";
 import { Container, Button, Card } from "react-bootstrap";
-import { Image } from "react-bootstrap";
 import { firstLetterToUpperCase } from "../../../utils/utils";
 import { useParams } from "react-router";
 import {
@@ -17,6 +16,7 @@ import { useFetchFirestoreDoc } from "../../../hooks/useFetchFirestoreDoc";
 import { ShopListModal } from "./utils/ShopListModal";
 import { db } from "../../../firebase";
 import { AuthContext } from "../../../contexts/AuthContext";
+import { StorageImage } from "../../utils/StorageImage";
 
 const getCurrentClicksForProduct = (doc, prodID) => {
     // we return 1 in not seen case, because log10(1) === 0
@@ -139,7 +139,7 @@ export const ProductDetails = ({ history }) => {
                         <br />
                         <h4>{firstLetterToUpperCase(product.name)}</h4>
                         <div>
-                            <Image
+                            <StorageImage
                                 style={{ padding: "20px" }}
                                 src={product.image}
                                 width="100%"

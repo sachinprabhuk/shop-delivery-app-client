@@ -1,14 +1,8 @@
 import React from "react";
-import {
-    CardActions,
-    CardContent,
-    Typography,
-    makeStyles,
-    Card,
-    CardMedia,
-} from "@material-ui/core";
+import { CardActions, CardContent, Typography, makeStyles, Card } from "@material-ui/core";
 import { Button } from "react-bootstrap";
-// import { Delete, DeleteOutline } from "@material-ui/icons";
+import { Thumbnail } from "../../utils/Thumbnail";
+import { THUMBNAIL_SIZE } from "../../../constants/constants";
 
 const useStyles = makeStyles({
     main: {
@@ -19,6 +13,8 @@ const useStyles = makeStyles({
     root: {
         display: "flex",
         borderRadius: "0px",
+        alignItems: "center",
+        margin: "0px",
     },
     details: {
         display: "flex",
@@ -28,8 +24,8 @@ const useStyles = makeStyles({
         flex: "1 0 auto",
     },
     cover: {
-        minWidth: 111,
-        maxWidth: 111,
+        width: THUMBNAIL_SIZE,
+        height: THUMBNAIL_SIZE,
         margin: "10px",
     },
 });
@@ -43,41 +39,17 @@ export const CartCard = ({ cartItem, history, removeCartItem }) => {
                 className={classes.root}
                 onClick={() => history.push(`/details/product/${cartItem.product.id}`)}
             >
-                <CardMedia className={classes.cover} image={cartItem.product.image} />
+                <div className={classes.cover}>
+                    <Thumbnail
+                        src={cartItem.product.image}
+                        className="w-100 h-100 object-fit-cover"
+                        alt="error"
+                    />
+                </div>
 
                 <CardActions>
                     <div className={classes.details}>
-                        <CardContent className={classes.content}>
-                            {/* <div className="float-right d-flex">
-                                <Button
-                                    style={{
-                                        border: "none",
-                                        marginLeft: "3px",
-                                    }}
-                                    variant="light"
-                                >
-                                    -
-                                </Button>
-
-                                <label
-                                    style={{
-                                        width: "30px",
-                                        textAlign: "center",
-                                        marginTop: "4px",
-                                    }}
-                                >
-                                    {cartItem.quantity}
-                                </label>
-                                <Button
-                                    style={{
-                                        border: "none",
-                                        marginRight: "3px",
-                                    }}
-                                    variant="light"
-                                >
-                                    +
-                                </Button>
-                            </div> */}
+                        <CardContent className={`${classes.content} my-0 py-2`}>
                             <h5>
                                 {cartItem.product.name}
                                 {"   "}
@@ -100,13 +72,12 @@ export const CartCard = ({ cartItem, history, removeCartItem }) => {
             </div>
 
             <Button
-                style={{ borderRadius: "0px", width: "100%", border: "none" }}
-                size="lg"
+                style={{ borderRadius: "0px", width: "100%", border: "none", fontSize: "16px" }}
                 variant="outline-danger"
                 onClick={() => removeCartItem(cartItem.id)}
                 className="d-flex align-items-center justify-content-center"
             >
-                Remove{"   "}
+                Remove
                 {/* <DeleteOutline fontSize="small" /> */}
             </Button>
         </Card>

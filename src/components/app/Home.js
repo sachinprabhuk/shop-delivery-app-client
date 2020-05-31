@@ -3,7 +3,12 @@ import { Container } from "react-bootstrap";
 import { withStdTopNav, withStdBottomNav } from "../HOC/NavHOC";
 import { AuthContext } from "../../contexts/AuthContext";
 import { useAsync } from "../../hooks/useAsync";
-import { USER_COLLECTION, ITEMS_COLLECTION, PRODUCT_VIEWED } from "../../constants/constants";
+import {
+    USER_COLLECTION,
+    ITEMS_COLLECTION,
+    PRODUCT_VIEWED,
+    THUMBNAIL_SIZE,
+} from "../../constants/constants";
 import { db } from "../../firebase";
 import { Loader } from "../utils/Loader";
 
@@ -11,8 +16,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import CardContent from "@material-ui/core/CardContent";
-import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
+import { Thumbnail } from "../utils/Thumbnail";
 
 const useStyles = makeStyles({
     root: {
@@ -30,9 +35,9 @@ const useStyles = makeStyles({
         flex: "1 0 auto",
     },
     cover: {
-        margin: 20,
-        width: 82,
-        height: 80,
+        margin: 10,
+        width: THUMBNAIL_SIZE,
+        height: THUMBNAIL_SIZE,
     },
 });
 
@@ -133,12 +138,13 @@ export const Home = withStdBottomNav(
                                         </div>
                                     </CardActionArea>
                                     <div style={{ textAlign: "center" }}>
-                                        <CardMedia
-                                            className={classes.cover}
-                                            image={el.image}
-                                            component="img"
-                                            title="Live from space album cover"
-                                        />
+                                        <div className={classes.cover}>
+                                            <Thumbnail
+                                                src={el.image}
+                                                alt="error"
+                                                className="w-100 h-100 object-fit-cover"
+                                            />
+                                        </div>
                                         <h5 style={{ fontSize: "17px" }}>
                                             ₹ {el.price}/{el.unit}{" "}
                                         </h5>

@@ -1,7 +1,8 @@
 import React from "react";
-import { Row, Col, Image } from "react-bootstrap";
+import { Row, Col } from "react-bootstrap";
 import { firstLetterToUpperCase } from "../../../../utils/utils";
 import { Link } from "react-router-dom";
+import { Thumbnail } from "../../../utils/Thumbnail";
 
 export const ShopCard = ({ name, image, address, phone, id }) => {
     return (
@@ -11,7 +12,7 @@ export const ShopCard = ({ name, image, address, phone, id }) => {
         >
             <Row className="py-2">
                 <Col xs={4} className="row align-items-center">
-                    <Image src={image} width="100%" alt="Error" />
+                    <Thumbnail src={image} width="100%" alt="Error" />
                 </Col>
                 <Col xs={1}></Col>
                 <Col xs={7} className="row text-align-center flex-column">

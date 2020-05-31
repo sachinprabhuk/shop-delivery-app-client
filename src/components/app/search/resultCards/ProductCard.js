@@ -1,7 +1,8 @@
 import React from "react";
-import { Row, Col, Image } from "react-bootstrap";
+import { Row, Col } from "react-bootstrap";
 import { firstLetterToUpperCase } from "../../../../utils/utils";
 import { Link } from "react-router-dom";
+import { Thumbnail } from "../../../utils/Thumbnail";
 
 export const ProductCard = ({ name, image, price, details, id, unit }) => {
     return (
@@ -11,7 +12,7 @@ export const ProductCard = ({ name, image, price, details, id, unit }) => {
         >
             <Row className="py-2">
                 <Col xs={4} className="row align-items-center">
-                    <Image src={image} width="100px" height="100px" alt="Error" />
+                    <Thumbnail src={image} width="100px" height="100px" alt="Error" />
                 </Col>
                 <Col xs={4}>
                     <h5>{firstLetterToUpperCase(name)}</h5>
