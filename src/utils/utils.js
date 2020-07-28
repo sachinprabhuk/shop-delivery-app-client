@@ -1,5 +1,15 @@
 import geohash from "ngeohash";
 import { MAXIMUM_DELIVERY_DISTANCE_MILES } from "../constants/constants";
+import algoliasearch from "algoliasearch";
+
+const algoliaClient = algoliasearch(
+    process.env.REACT_APP_ALGOLIA_APP_ID,
+    process.env.REACT_APP_ALGOLIA_API_KEY
+);
+
+export const productIndex = algoliaClient.initIndex("productIndex");
+
+export const shopIndex = algoliaClient.initIndex("shopIndex");
 
 export const firstLetterToUpperCase = (str) => {
     if (str) {
