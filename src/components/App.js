@@ -23,6 +23,7 @@ export const App = () => {
             <Route exact path="/" component={Home} />
             <Route exact path="/profile" component={Profile} />
             <Route exact path="/search/:type/:query" component={SearchResultPage} />
+            <Route exact path="/search/:type/:query/:id" component={SearchResultPage} />
             <Route exact path="/search/:type" component={SearchInput} />
             <Route exact path="/searchpage" component={SearchPage} />
             <Route exact path="/details/shop/:id" component={ShopDetails} />

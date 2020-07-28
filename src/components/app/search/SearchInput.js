@@ -39,7 +39,7 @@ export const SearchInput = ({ history }) => {
         const suggestedItems =
             suggestions && suggestions.length > 0 ? (
                 suggestions.map((suggestion) => {
-                    return <Suggestion suggestion={suggestion} key={suggestion.id} />;
+                    return <Suggestion suggestion={suggestion} key={suggestion.id} type={type} />;
                 })
             ) : isTouched ? (
                 <p className="text-center p-2">No results</p>

@@ -2,12 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import { SearchResTopNav } from "../../navigations/SearchResTopNav";
 import { Loader } from "../../utils/Loader";
 import { useParams } from "react-router";
-import { db } from "../../../firebase";
-import {
-    SEARCH_TYPE_PRODUCT,
-    ITEMS_COLLECTION,
-    SHOPS_COLLECTION,
-} from "../../../constants/constants";
+import { SEARCH_TYPE_PRODUCT } from "../../../constants/constants";
 import { ProductCard } from "./resultCards/ProductCard";
 import { ShopCard } from "./resultCards/ShopCard";
 
@@ -17,44 +12,37 @@ export const SearchResultPage = ({ location, history }) => {
     const [resultType, setResultType] = useState(null);
     const [fetchError, setFetchError] = useState(null);
 
-    const { type: searchType, query } = useParams();
+    const { type: searchType, query, id } = useParams();
 
     useEffect(() => {
         const fetchOperation = async () => {
             try {
-                const endQuery =
-                    query.slice(0, query.length - 1) +
-                    String.fromCharCode(query[query.length - 1].charCodeAt(0) + 1);
-                const collection =
-                    searchType === SEARCH_TYPE_PRODUCT ? ITEMS_COLLECTION : SHOPS_COLLECTION;
-                const data = await db
-                    .collection(collection)
-                    .where("name", ">=", query)
-                    .where("name", "<", endQuery)
-                    .get();
-                if (!data || data.docs.length === 0) {
+                let queryParams = `type=${searchType}&query=${query}`;
+                if (id) {
+                    queryParams += `&id=${id}`;
+                }
+                const url = `https://us-central1-shopdeliverymanagement.cloudfunctions.net/searchDB?${queryParams}`;
+                const rawData = await fetch(url);
+                const data = await rawData.json();
+
+                if (!data || data.length === 0) {
                     console.log("No data found");
                     setResults(null);
                     setFetchError("Ooops! No results found!!!");
                 } else {
-                    const processedData = data.docs.map((el) => {
-                        const data = el.data();
-                        data.id = el.id;
-                        return data;
-                    });
                     setResultType(searchType);
-                    setResults(processedData);
+                    setResults(data);
                     setFetchError(null);
                 }
                 setFetching(false);
             } catch (e) {
                 setFetchError("Error while fetching results!!!");
                 setFetching(false);
-                // console.log(e);
+                console.log(e);
             }
         };
         fetchOperation();
-    }, [query, searchType]);
+    }, [query, searchType, id]);
 
     const searchClicked = useCallback(() => {
         history.push(`/search/${searchType}`);
